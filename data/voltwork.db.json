@@ -1,0 +1,1473 @@
+{
+  "users": [
+    {
+      "id": "usr-admin-01",
+      "name": "Master Electrician & Admin",
+      "email": "admin@voltwork.ai",
+      "phone": "+91 98765 43210",
+      "role": "admin",
+      "address": "Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716",
+      "location": "Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716",
+      "village": "Mudukkumeendanpatti",
+      "taluk": "Kovilpatti",
+      "district": "Thoothukudi",
+      "state": "Tamilnadu",
+      "pincode": "628716",
+      "latitude": 9.17,
+      "longitude": 77.87,
+      "createdAt": "2026-08-25T04:54:22.555Z",
+      "status": "active",
+      "passwordHash": "44c37090362e449f2859ad875527b128493dbcfd50b6335320dadd688395efdb",
+      "lastLogin": "2026-08-26T01:38:57.566Z",
+      "avatarUrl": "https://api.dicebear.com/7.x/bottts/svg?seed=admin%40voltwork.ai"
+    },
+    {
+      "id": "usr-google-1787633784331",
+      "name": "ganeshkumargurusamy619",
+      "email": "ganeshkumargurusamy619@gmail.com",
+      "phone": "+91 98400 00000",
+      "role": "customer",
+      "avatarUrl": "https://api.dicebear.com/7.x/bottts/svg?seed=ganeshkumargurusamy619%40gmail.com",
+      "createdAt": "2026-08-25T04:56:24.331Z",
+      "status": "active",
+      "passwordHash": "7c8ecef61fa225baef3099c9b3467f61191dc0533be51f569633384058954df5",
+      "googleId": "gid_1787633784331",
+      "address": "364/2, vishnunagar, Mudukkumeendanpatti, kovilpatti, Thoothukudi, Tamil Nadu - 628716",
+      "doorNo": "364/2",
+      "street": "vishnunagar",
+      "area": "Mudukkumeendanpatti",
+      "city": "kovilpatti",
+      "district": "Thoothukudi",
+      "state": "Tamil Nadu",
+      "pincode": "628716",
+      "latitude": 8.3789,
+      "longitude": 78.0287,
+      "gpsCaptured": true
+    },
+    {
+      "id": "usr-work-1787708909316",
+      "name": "senthil kumaran",
+      "email": "senthil@gmail.com",
+      "phone": "8610944373",
+      "role": "worker",
+      "avatarUrl": "https://api.dicebear.com/7.x/personas/svg?seed=senthil%20kumaran",
+      "createdAt": "2026-08-26T01:48:29.316Z",
+      "status": "active",
+      "passwordHash": "9cbb5550e8d6a97754c3edd27ca18723ef08bd4f7586ee562aebe5b0c0ea7095"
+    }
+  ],
+  "customers": [
+    {
+      "id": "cust-1787633784331",
+      "userId": "usr-google-1787633784331",
+      "name": "ganeshkumargurusamy619",
+      "phone": "+91 98400 00000",
+      "email": "ganeshkumargurusamy619@gmail.com",
+      "address": "364/2, vishnunagar, Mudukkumeendanpatti, kovilpatti, Thoothukudi, Tamil Nadu - 628716",
+      "latitude": 8.731554,
+      "longitude": 77.723515,
+      "createdAt": "2026-08-25T04:56:24.331Z",
+      "totalJobs": 0,
+      "totalSpent": 0,
+      "doorNo": "364/2",
+      "street": "vishnunagar",
+      "area": "Mudukkumeendanpatti",
+      "city": "kovilpatti",
+      "district": "Thoothukudi",
+      "state": "Tamil Nadu",
+      "pincode": "628716",
+      "gpsCaptured": true,
+      "gpsCapturedAt": "2026-08-26T01:50:41.128Z"
+    }
+  ],
+  "workers": [
+    {
+      "id": "work-1787708909316",
+      "userId": "usr-work-1787708909316",
+      "name": "senthil kumaran",
+      "phone": "8610944373",
+      "email": "senthil@gmail.com",
+      "avatarUrl": "https://api.dicebear.com/7.x/personas/svg?seed=senthil%20kumaran",
+      "skills": [
+        "Wiring",
+        "MCB / DB",
+        "General"
+      ],
+      "experienceYears": 3,
+      "address": "Kovilpatti, Thoothukudi District, Tamilnadu - 628716",
+      "availability": "available",
+      "isLocationSharing": false,
+      "joiningDate": "2026-08-26",
+      "employmentType": "full_time",
+      "salaryType": "monthly",
+      "basicSalary": 18000,
+      "commissionRate": 10,
+      "status": "active",
+      "completedJobsCount": 2,
+      "rating": 5
+    }
+  ],
+  "serviceCategories": [
+    {
+      "id": "cat-fan",
+      "name": "Fan Repair",
+      "requiredSkill": "Fan Repair",
+      "defaultRefPrice": 350,
+      "description": "Ceiling fan, exhaust fan, regulator replacement, bearing and winding fix",
+      "iconName": "Fan"
+    },
+    {
+      "id": "cat-light",
+      "name": "Light Repair",
+      "requiredSkill": "Lighting",
+      "defaultRefPrice": 250,
+      "description": "LED lights, tube lights, chandelier, panel lights, floodlight repair",
+      "iconName": "Lamp"
+    },
+    {
+      "id": "cat-switch",
+      "name": "Switch Repair",
+      "requiredSkill": "Switchgear",
+      "defaultRefPrice": 200,
+      "description": "Modular switch replacement, faulty switchboard, gang box inspection",
+      "iconName": "ToggleRight"
+    },
+    {
+      "id": "cat-socket",
+      "name": "Socket Repair",
+      "requiredSkill": "Switchgear",
+      "defaultRefPrice": 250,
+      "description": "16A power socket, 6A standard socket, earthing check, burnt pin fix",
+      "iconName": "Plug"
+    },
+    {
+      "id": "cat-wiring",
+      "name": "Wiring",
+      "requiredSkill": "Wiring",
+      "defaultRefPrice": 1200,
+      "description": "Complete home wiring, conduit wiring, short circuit isolation, re-wiring",
+      "iconName": "Cable"
+    },
+    {
+      "id": "cat-mcb",
+      "name": "MCB / DB",
+      "requiredSkill": "MCB / DB",
+      "defaultRefPrice": 800,
+      "description": "Distribution board overhaul, MCB tripping fix, RCCB / ELCB installation",
+      "iconName": "ShieldAlert"
+    },
+    {
+      "id": "cat-motor",
+      "name": "Motor",
+      "requiredSkill": "Motors",
+      "defaultRefPrice": 1500,
+      "description": "Single/Three-phase motor starter, winding diagnosis, capacitor change",
+      "iconName": "Cpu"
+    },
+    {
+      "id": "cat-pump",
+      "name": "Pump",
+      "requiredSkill": "Motors",
+      "defaultRefPrice": 950,
+      "description": "Submersible pump, borewell starter, monoblock water pump electricals",
+      "iconName": "Activity"
+    },
+    {
+      "id": "cat-inverter",
+      "name": "Inverter",
+      "requiredSkill": "Inverter",
+      "defaultRefPrice": 850,
+      "description": "Inverter home backup wiring, battery connection, changeover switch",
+      "iconName": "BatteryCharging"
+    },
+    {
+      "id": "cat-appliance",
+      "name": "Appliance Electrical Issue",
+      "requiredSkill": "Appliances",
+      "defaultRefPrice": 600,
+      "description": "Geyser, heater, AC point electrical line, washing machine plug points",
+      "iconName": "Wrench"
+    },
+    {
+      "id": "cat-new-install",
+      "name": "New Electrical Installation",
+      "requiredSkill": "Wiring",
+      "defaultRefPrice": 3500,
+      "description": "Full house electrification, meter box connection, earthing rod setup",
+      "iconName": "Building"
+    },
+    {
+      "id": "cat-emergency",
+      "name": "Emergency",
+      "requiredSkill": "Emergency",
+      "defaultRefPrice": 1000,
+      "description": "Electrical fire sparks, total power blackout, neutral wire break",
+      "iconName": "Flame"
+    },
+    {
+      "id": "cat-other",
+      "name": "Other",
+      "requiredSkill": "General",
+      "defaultRefPrice": 400,
+      "description": "General electrical inspection, energy audit, miscellaneous repairs",
+      "iconName": "HelpCircle"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "JOB-2026-0001",
+      "customerId": "cust-1787633784331",
+      "customerName": "ganeshkumargurusamy619",
+      "customerPhone": "+91 98400 00000",
+      "customerEmail": "ganeshkumargurusamy619@gmail.com",
+      "address": "364/2, vishnunagar, Mudukkumeendanpatti, kovilpatti, Thoothukudi, Tamil Nadu - 628716",
+      "latitude": 8.3789,
+      "longitude": 78.0287,
+      "description": "motor belt fault",
+      "category": "Motor",
+      "priority": "medium",
+      "preferredDate": "2026-08-26",
+      "aiAnalysis": {
+        "category": "Motor",
+        "serviceCategory": "Motor",
+        "priority": "medium",
+        "requiredSkill": "Senior",
+        "possibleIssue": "Single phasing condition, worn motor bearings, or overheated auxiliary starting winding.",
+        "suggestedMaterials": [
+          "Motor Starter Relay Unit",
+          "Run Capacitor (36/72 mfd)",
+          "Overload Protection Unit",
+          "Thermal Cutoff Relay"
+        ],
+        "estimatedComplexity": "Moderate",
+        "confidence": 90,
+        "engine": "VoltWork Rule-Based AI Engine (100% Guaranteed Fallback)",
+        "safetyWarning": "Ensure the main breaker switch is turned off before touching any exposed wiring or terminals.",
+        "estimatedPriceRange": {
+          "min": 650,
+          "max": 2100
+        },
+        "diagnosticPoints": [
+          "Measure balance of 3-phase or single-phase winding resistance",
+          "Verify starter overload relay trip setting",
+          "Check shaft mechanical free rotation"
+        ],
+        "timestamp": "2026-08-26T01:51:22.964Z"
+      },
+      "status": "PAID",
+      "paymentStatus": "paid",
+      "notes": "",
+      "createdAt": "2026-08-26T01:52:02.417Z",
+      "updatedAt": "2026-08-26T01:58:35.741Z",
+      "assignedWorkerId": "work-1787708909316",
+      "assignedWorkerName": "senthil kumaran",
+      "assignedWorkerPhone": "8610944373",
+      "scheduledDate": "2026-08-26T01:52:54.975Z",
+      "workDetails": {
+        "description": "motot belt new , capacitor new",
+        "workSummary": "motot belt new , capacitor new",
+        "labourCharge": 350,
+        "additionalCharges": 0,
+        "additionalChargesReason": "",
+        "beforePhotos": [
+          "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=500&auto=format&fit=crop&q=60"
+        ],
+        "afterPhotos": [
+          "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&auto=format&fit=crop&q=60"
+        ],
+        "submittedAt": "2026-08-26T01:56:28.320Z"
+      },
+      "completedAt": "2026-08-26T01:56:28.320Z",
+      "finalAmount": 800,
+      "finalAmountApprovedBy": "Master Electrician & Admin",
+      "finalAmountApprovedAt": "2026-08-26T01:57:27.286Z",
+      "verifiedAt": "2026-08-26T01:57:27.286Z",
+      "lastSmsStatus": "Sent",
+      "paymentMethod": "upi"
+    },
+    {
+      "id": "JOB-2026-0002",
+      "customerId": "cust-1787633784331",
+      "customerName": "ganeshkumargurusamy619",
+      "customerPhone": "+91 98400 00000",
+      "customerEmail": "ganeshkumargurusamy619@gmail.com",
+      "address": "364/2, vishnunagar, Mudukkumeendanpatti, kovilpatti, Thoothukudi, Tamil Nadu - 628716",
+      "latitude": 8.731554,
+      "longitude": 77.723515,
+      "description": "fan repair",
+      "category": "Fan Repair",
+      "priority": "medium",
+      "preferredDate": "2026-08-26",
+      "aiAnalysis": {
+        "category": "Fan Repair",
+        "serviceCategory": "Fan Repair",
+        "priority": "medium",
+        "requiredSkill": "Junior",
+        "possibleIssue": "Degraded running capacitor, stiff bearing lubrication, or faulty electronic step regulator.",
+        "suggestedMaterials": [
+          "2.5 mfd / 3.15 mfd Capacitor",
+          "Electronic Step Regulator",
+          "Bearing Set 6201/6202",
+          "Fan Blade Screws"
+        ],
+        "estimatedComplexity": "Simple",
+        "confidence": 95,
+        "engine": "VoltWork Rule-Based AI Engine (100% Guaranteed Fallback)",
+        "safetyWarning": "Ensure the main breaker switch is turned off before touching any exposed wiring or terminals.",
+        "estimatedPriceRange": {
+          "min": 250,
+          "max": 650
+        },
+        "diagnosticPoints": [
+          "Measure capacitor capacitance using LCR / Multimeter",
+          "Inspect mechanical shaft free spin and bearing play",
+          "Test regulator output voltage step increments"
+        ],
+        "timestamp": "2026-08-26T02:33:22.886Z"
+      },
+      "status": "PAID",
+      "paymentStatus": "paid",
+      "notes": "",
+      "createdAt": "2026-08-26T02:33:41.055Z",
+      "updatedAt": "2026-08-26T02:37:00.074Z",
+      "assignedWorkerId": "work-1787708909316",
+      "assignedWorkerName": "senthil kumaran",
+      "assignedWorkerPhone": "8610944373",
+      "scheduledDate": "2026-08-26T02:34:36.227Z",
+      "workDetails": {
+        "description": "fan coil binding",
+        "workSummary": "fan coil binding",
+        "labourCharge": 350,
+        "additionalCharges": 0,
+        "additionalChargesReason": "",
+        "beforePhotos": [
+          "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=500&auto=format&fit=crop&q=60"
+        ],
+        "afterPhotos": [
+          "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&auto=format&fit=crop&q=60"
+        ],
+        "submittedAt": "2026-08-26T02:35:50.093Z"
+      },
+      "completedAt": "2026-08-26T02:35:50.093Z",
+      "finalAmount": 470,
+      "finalAmountApprovedBy": "Master Electrician & Admin",
+      "finalAmountApprovedAt": "2026-08-26T02:36:14.523Z",
+      "verifiedAt": "2026-08-26T02:36:14.523Z",
+      "lastSmsStatus": "Sent",
+      "paymentMethod": "upi"
+    }
+  ],
+  "jobMaterials": [
+    {
+      "id": "mat-1787709388320-l6i2",
+      "jobId": "JOB-2026-0001",
+      "materialName": "Capacitor 2.5 mfd,motor belt",
+      "quantity": 1,
+      "unitPrice": 550,
+      "totalPrice": 550,
+      "addedByWorkerId": "work-1787708909316",
+      "createdAt": "2026-08-26T01:56:28.320Z"
+    },
+    {
+      "id": "mat-1787711750093-6lin",
+      "jobId": "JOB-2026-0002",
+      "materialName": "bindig work",
+      "quantity": 1,
+      "unitPrice": 120,
+      "totalPrice": 120,
+      "addedByWorkerId": "work-1787708909316",
+      "createdAt": "2026-08-26T02:35:50.093Z"
+    }
+  ],
+  "jobStatusHistory": [
+    {
+      "id": "hist-1787709122417",
+      "jobId": "JOB-2026-0001",
+      "status": "REQUESTED",
+      "notes": "Job request submitted by customer",
+      "updatedByUserId": "usr-google-1787633784331",
+      "updatedByName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "timestamp": "2026-08-26T01:52:02.417Z",
+      "locationLat": 8.3789,
+      "locationLng": 78.0287
+    },
+    {
+      "id": "hist-1787709174975",
+      "jobId": "JOB-2026-0001",
+      "status": "ASSIGNED",
+      "notes": "Assigned to electrician senthil kumaran",
+      "updatedByUserId": "usr-admin-01",
+      "updatedByName": "Master Electrician & Admin",
+      "role": "admin",
+      "timestamp": "2026-08-26T01:52:54.975Z"
+    },
+    {
+      "id": "hist-1787709200942",
+      "jobId": "JOB-2026-0001",
+      "status": "ACCEPTED",
+      "notes": "Status updated to ACCEPTED",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T01:53:20.942Z"
+    },
+    {
+      "id": "hist-1787709204205",
+      "jobId": "JOB-2026-0001",
+      "status": "ON_THE_WAY",
+      "notes": "Status updated to ON_THE_WAY",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T01:53:24.205Z"
+    },
+    {
+      "id": "hist-1787709209152",
+      "jobId": "JOB-2026-0001",
+      "status": "REACHED",
+      "notes": "Status updated to REACHED",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T01:53:29.152Z"
+    },
+    {
+      "id": "hist-1787709212606",
+      "jobId": "JOB-2026-0001",
+      "status": "WORK_STARTED",
+      "notes": "Status updated to WORK_STARTED",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T01:53:32.606Z"
+    },
+    {
+      "id": "hist-1787709388320",
+      "jobId": "JOB-2026-0001",
+      "status": "WAITING_FOR_ADMIN_VERIFICATION",
+      "notes": "Work completed by senthil kumaran. Submitted for Admin verification.",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T01:56:28.320Z"
+    },
+    {
+      "id": "hist-1787709447286",
+      "jobId": "JOB-2026-0001",
+      "status": "ADMIN_VERIFIED",
+      "notes": "Bill verified and approved by Admin Master Electrician & Admin. Final Amount: ₹800",
+      "updatedByUserId": "usr-admin-01",
+      "updatedByName": "Master Electrician & Admin",
+      "role": "admin",
+      "timestamp": "2026-08-26T01:57:27.286Z"
+    },
+    {
+      "id": "hist-1787709515741",
+      "jobId": "JOB-2026-0001",
+      "status": "PAID",
+      "notes": "Payment of ₹800 confirmed via upi. Txn: TXN-UPI-516203",
+      "updatedByUserId": "usr-google-1787633784331",
+      "updatedByName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "timestamp": "2026-08-26T01:58:35.741Z"
+    },
+    {
+      "id": "hist-1787711621055",
+      "jobId": "JOB-2026-0002",
+      "status": "REQUESTED",
+      "notes": "Job request submitted by customer",
+      "updatedByUserId": "usr-google-1787633784331",
+      "updatedByName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "timestamp": "2026-08-26T02:33:41.055Z",
+      "locationLat": 8.731554,
+      "locationLng": 77.723515
+    },
+    {
+      "id": "hist-1787711676227",
+      "jobId": "JOB-2026-0002",
+      "status": "ASSIGNED",
+      "notes": "Assigned to electrician senthil kumaran",
+      "updatedByUserId": "usr-admin-01",
+      "updatedByName": "Master Electrician & Admin",
+      "role": "admin",
+      "timestamp": "2026-08-26T02:34:36.227Z"
+    },
+    {
+      "id": "hist-1787711689070",
+      "jobId": "JOB-2026-0002",
+      "status": "ACCEPTED",
+      "notes": "Status updated to ACCEPTED",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T02:34:49.070Z"
+    },
+    {
+      "id": "hist-1787711690405",
+      "jobId": "JOB-2026-0002",
+      "status": "ON_THE_WAY",
+      "notes": "Status updated to ON_THE_WAY",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T02:34:50.405Z"
+    },
+    {
+      "id": "hist-1787711691987",
+      "jobId": "JOB-2026-0002",
+      "status": "REACHED",
+      "notes": "Status updated to REACHED",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T02:34:51.987Z"
+    },
+    {
+      "id": "hist-1787711692944",
+      "jobId": "JOB-2026-0002",
+      "status": "WORK_STARTED",
+      "notes": "Status updated to WORK_STARTED",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T02:34:52.944Z"
+    },
+    {
+      "id": "hist-1787711750093",
+      "jobId": "JOB-2026-0002",
+      "status": "WAITING_FOR_ADMIN_VERIFICATION",
+      "notes": "Work completed by senthil kumaran. Submitted for Admin verification.",
+      "updatedByUserId": "usr-work-1787708909316",
+      "updatedByName": "senthil kumaran",
+      "role": "worker",
+      "timestamp": "2026-08-26T02:35:50.093Z"
+    },
+    {
+      "id": "hist-1787711774523",
+      "jobId": "JOB-2026-0002",
+      "status": "ADMIN_VERIFIED",
+      "notes": "Bill verified and approved by Admin Master Electrician & Admin. Final Amount: ₹470",
+      "updatedByUserId": "usr-admin-01",
+      "updatedByName": "Master Electrician & Admin",
+      "role": "admin",
+      "timestamp": "2026-08-26T02:36:14.523Z"
+    },
+    {
+      "id": "hist-1787711820074",
+      "jobId": "JOB-2026-0002",
+      "status": "PAID",
+      "notes": "Payment of ₹470 confirmed via upi. Txn: TXN-UPI-820436",
+      "updatedByUserId": "usr-google-1787633784331",
+      "updatedByName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "timestamp": "2026-08-26T02:37:00.074Z"
+    }
+  ],
+  "invoices": [
+    {
+      "id": "INV-2026-0001",
+      "jobId": "JOB-2026-0001",
+      "customerId": "cust-1787633784331",
+      "customerName": "ganeshkumargurusamy619",
+      "customerPhone": "+91 98400 00000",
+      "customerAddress": "364/2, vishnunagar, Mudukkumeendanpatti, kovilpatti, Thoothukudi, Tamil Nadu - 628716",
+      "workerId": "work-1787708909316",
+      "workerName": "senthil kumaran",
+      "category": "Motor",
+      "materialCost": 550,
+      "labourCharge": 350,
+      "additionalCharges": 0,
+      "suggestedTotal": 900,
+      "finalAmount": 800,
+      "approvedByAdminId": "usr-admin-01",
+      "approvedByAdminName": "Master Electrician & Admin",
+      "approvedAt": "2026-08-26T01:57:27.286Z",
+      "status": "paid",
+      "createdAt": "2026-08-26T01:57:27.286Z",
+      "paidAt": "2026-08-26T01:58:35.741Z",
+      "paymentMethod": "upi"
+    },
+    {
+      "id": "INV-2026-0002",
+      "jobId": "JOB-2026-0002",
+      "customerId": "cust-1787633784331",
+      "customerName": "ganeshkumargurusamy619",
+      "customerPhone": "+91 98400 00000",
+      "customerAddress": "364/2, vishnunagar, Mudukkumeendanpatti, kovilpatti, Thoothukudi, Tamil Nadu - 628716",
+      "workerId": "work-1787708909316",
+      "workerName": "senthil kumaran",
+      "category": "Fan Repair",
+      "materialCost": 120,
+      "labourCharge": 350,
+      "additionalCharges": 0,
+      "suggestedTotal": 470,
+      "finalAmount": 470,
+      "approvedByAdminId": "usr-admin-01",
+      "approvedByAdminName": "Master Electrician & Admin",
+      "approvedAt": "2026-08-26T02:36:14.523Z",
+      "status": "paid",
+      "createdAt": "2026-08-26T02:36:14.523Z",
+      "paidAt": "2026-08-26T02:37:00.074Z",
+      "paymentMethod": "upi"
+    }
+  ],
+  "payments": [
+    {
+      "id": "PAY-2026-0001",
+      "invoiceId": "INV-2026-0001",
+      "jobId": "JOB-2026-0001",
+      "customerId": "cust-1787633784331",
+      "customerName": "ganeshkumargurusamy619",
+      "amount": 800,
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "transactionRef": "TXN-UPI-516203",
+      "recordedByName": "ganeshkumargurusamy619",
+      "paymentDate": "2026-08-26T01:58:35.741Z",
+      "notes": "Customer digital payment via VoltWork Portal"
+    },
+    {
+      "id": "PAY-2026-0002",
+      "invoiceId": "INV-2026-0002",
+      "jobId": "JOB-2026-0002",
+      "customerId": "cust-1787633784331",
+      "customerName": "ganeshkumargurusamy619",
+      "amount": 470,
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "transactionRef": "TXN-UPI-820436",
+      "recordedByName": "ganeshkumargurusamy619",
+      "paymentDate": "2026-08-26T02:37:00.074Z",
+      "notes": "Customer digital payment via VoltWork Portal"
+    }
+  ],
+  "salaryRecords": [
+    {
+      "id": "SAL-202608-001",
+      "workerId": "work-1787708909316",
+      "workerName": "senthil kumaran",
+      "salaryPeriod": "2026-08",
+      "basicSalary": 18000,
+      "commission": 500,
+      "bonus": 1000,
+      "deduction": 0,
+      "totalSalary": 19500,
+      "paidAmount": 19500,
+      "remainingAmount": 0,
+      "status": "paid",
+      "paymentMethod": "upi",
+      "paymentDate": "2026-08-26T02:11:44.111Z",
+      "notes": "Monthly standard salary computation",
+      "createdAt": "2026-08-26T02:10:41.503Z",
+      "smsStatus": "Sent",
+      "lastSmsSentAt": "2026-08-26T02:31:19.310Z"
+    }
+  ],
+  "attendance": [
+    {
+      "id": "att-1787710743619",
+      "workerId": "work-1787708909316",
+      "workerName": "senthil kumaran",
+      "date": "2026-08-26",
+      "checkIn": "02:19:03",
+      "status": "present",
+      "locationLat": 13.0827,
+      "locationLng": 80.2707,
+      "notes": "Checked in via mobile app"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif-1787711820075-5frju",
+      "createdAt": "2026-08-26T02:37:00.075Z",
+      "isRead": false,
+      "recipientRole": "customer",
+      "title": "Payment Successful",
+      "message": "Your payment of ₹470 for Fan Repair (JOB-2026-0002) has been recorded. Receipt is ready.",
+      "jobId": "JOB-2026-0002",
+      "type": "payment_received"
+    },
+    {
+      "id": "notif-1787711820075-kzkl2",
+      "createdAt": "2026-08-26T02:37:00.075Z",
+      "isRead": true,
+      "recipientRole": "admin",
+      "title": "Payment Received",
+      "message": "Received ₹470 for Job JOB-2026-0002 (ganeshkumargurusamy619)",
+      "jobId": "JOB-2026-0002",
+      "type": "payment_received"
+    },
+    {
+      "id": "notif-1787711787491-dbsok",
+      "createdAt": "2026-08-26T02:36:27.491Z",
+      "isRead": true,
+      "recipientRole": "customer",
+      "title": "SMS Notification Sent",
+      "message": "SMS sent to your registered mobile +91 98400 00000 with bill details.",
+      "jobId": "JOB-2026-0002",
+      "type": "sms_sent"
+    },
+    {
+      "id": "notif-1787711774523-d35ze",
+      "createdAt": "2026-08-26T02:36:14.523Z",
+      "isRead": false,
+      "recipientRole": "customer",
+      "title": "Bill Approved & Ready",
+      "message": "Your electrical service (JOB-2026-0002) bill of ₹470 has been approved. You can now view invoice and make payment.",
+      "jobId": "JOB-2026-0002",
+      "type": "bill_approved"
+    },
+    {
+      "id": "notif-1787711750093-omnwg",
+      "createdAt": "2026-08-26T02:35:50.093Z",
+      "isRead": true,
+      "recipientRole": "admin",
+      "title": "Job Completed - Verification Required",
+      "message": "senthil kumaran completed job JOB-2026-0002. Please review materials, labour and set final bill amount.",
+      "jobId": "JOB-2026-0002",
+      "type": "work_completed"
+    },
+    {
+      "id": "notif-1787711692944-lv329",
+      "createdAt": "2026-08-26T02:34:52.944Z",
+      "isRead": false,
+      "recipientRole": "customer",
+      "title": "Service Status Update",
+      "message": "senthil kumaran has started the electrical repair work.",
+      "jobId": "JOB-2026-0002",
+      "type": "work_started"
+    },
+    {
+      "id": "notif-1787711691987-k1stf",
+      "createdAt": "2026-08-26T02:34:51.987Z",
+      "isRead": false,
+      "recipientRole": "customer",
+      "title": "Service Status Update",
+      "message": "senthil kumaran has reached your service location.",
+      "jobId": "JOB-2026-0002",
+      "type": "worker_reached"
+    },
+    {
+      "id": "notif-1787711690405-vgkc4",
+      "createdAt": "2026-08-26T02:34:50.405Z",
+      "isRead": false,
+      "recipientRole": "customer",
+      "title": "Service Status Update",
+      "message": "senthil kumaran is on the way to your location.",
+      "jobId": "JOB-2026-0002",
+      "type": "worker_on_the_way"
+    },
+    {
+      "id": "notif-1787711689070-le72v",
+      "createdAt": "2026-08-26T02:34:49.070Z",
+      "isRead": false,
+      "recipientRole": "customer",
+      "title": "Service Status Update",
+      "message": "senthil kumaran has accepted your service request.",
+      "jobId": "JOB-2026-0002",
+      "type": "worker_accepted"
+    },
+    {
+      "id": "notif-1787711676228-q79ly",
+      "createdAt": "2026-08-26T02:34:36.228Z",
+      "isRead": false,
+      "recipientRole": "customer",
+      "title": "Technician Assigned",
+      "message": "Electrician senthil kumaran (8610944373) has been assigned to your request (JOB-2026-0002).",
+      "jobId": "JOB-2026-0002",
+      "type": "worker_assigned"
+    },
+    {
+      "id": "notif-1787711676228-wulpi",
+      "createdAt": "2026-08-26T02:34:36.228Z",
+      "isRead": true,
+      "userId": "usr-work-1787708909316",
+      "recipientRole": "worker",
+      "title": "New Job Assigned",
+      "message": "You have been assigned job JOB-2026-0002 (Fan Repair) at 364/2, vishnunagar, Mudukkumeendanpatti, kovilpatti, Thoothukudi, Tamil Nadu - 628716",
+      "jobId": "JOB-2026-0002",
+      "type": "worker_assigned"
+    },
+    {
+      "id": "notif-1787711621056-3zd18",
+      "createdAt": "2026-08-26T02:33:41.056Z",
+      "isRead": true,
+      "recipientRole": "admin",
+      "title": "New Service Request",
+      "message": "ganeshkumargurusamy619 requested Fan Repair service (JOB-2026-0002)",
+      "jobId": "JOB-2026-0002",
+      "type": "job_created"
+    },
+    {
+      "id": "notif-1787711479310-a3ca3",
+      "createdAt": "2026-08-26T02:31:19.310Z",
+      "isRead": true,
+      "userId": "usr-work-1787708909316",
+      "recipientRole": "worker",
+      "title": "Salary SMS Dispatched",
+      "message": "Salary breakdown SMS dispatched to your phone 8610944373",
+      "type": "sms_sent"
+    },
+    {
+      "id": "notif-1787710371463-mjs73",
+      "createdAt": "2026-08-26T02:12:51.463Z",
+      "isRead": true,
+      "userId": "usr-work-1787708909316",
+      "recipientRole": "worker",
+      "title": "Salary SMS Dispatched",
+      "message": "Salary breakdown SMS dispatched to your phone 8610944373",
+      "type": "sms_sent"
+    },
+    {
+      "id": "notif-1787710241504-ykfx0",
+      "createdAt": "2026-08-26T02:10:41.504Z",
+      "isRead": true,
+      "userId": "usr-work-1787708909316",
+      "recipientRole": "worker",
+      "title": "Salary Statement Updated",
+      "message": "Salary for period 2026-08 has been computed: Total ₹19500, Paid: ₹0",
+      "type": "salary_updated"
+    },
+    {
+      "id": "notif-1787709515742-qrnk7",
+      "createdAt": "2026-08-26T01:58:35.742Z",
+      "isRead": true,
+      "recipientRole": "customer",
+      "title": "Payment Successful",
+      "message": "Your payment of ₹800 for Motor (JOB-2026-0001) has been recorded. Receipt is ready.",
+      "jobId": "JOB-2026-0001",
+      "type": "payment_received"
+    },
+    {
+      "id": "notif-1787709515741-ekw6e",
+      "createdAt": "2026-08-26T01:58:35.741Z",
+      "isRead": true,
+      "recipientRole": "admin",
+      "title": "Payment Received",
+      "message": "Received ₹800 for Job JOB-2026-0001 (ganeshkumargurusamy619)",
+      "jobId": "JOB-2026-0001",
+      "type": "payment_received"
+    },
+    {
+      "id": "notif-1787709458011-c0ald",
+      "createdAt": "2026-08-26T01:57:38.011Z",
+      "isRead": true,
+      "recipientRole": "customer",
+      "title": "SMS Notification Sent",
+      "message": "SMS sent to your registered mobile +91 98400 00000 with bill details.",
+      "jobId": "JOB-2026-0001",
+      "type": "sms_sent"
+    },
+    {
+      "id": "notif-1787709447287-6dxdc",
+      "createdAt": "2026-08-26T01:57:27.287Z",
+      "isRead": true,
+      "recipientRole": "customer",
+      "title": "Bill Approved & Ready",
+      "message": "Your electrical service (JOB-2026-0001) bill of ₹800 has been approved. You can now view invoice and make payment.",
+      "jobId": "JOB-2026-0001",
+      "type": "bill_approved"
+    },
+    {
+      "id": "notif-1787709388320-4ytd2",
+      "createdAt": "2026-08-26T01:56:28.320Z",
+      "isRead": true,
+      "recipientRole": "admin",
+      "title": "Job Completed - Verification Required",
+      "message": "senthil kumaran completed job JOB-2026-0001. Please review materials, labour and set final bill amount.",
+      "jobId": "JOB-2026-0001",
+      "type": "work_completed"
+    },
+    {
+      "id": "notif-1787709212606-ccbbd",
+      "createdAt": "2026-08-26T01:53:32.606Z",
+      "isRead": true,
+      "recipientRole": "customer",
+      "title": "Service Status Update",
+      "message": "senthil kumaran has started the electrical repair work.",
+      "jobId": "JOB-2026-0001",
+      "type": "work_started"
+    },
+    {
+      "id": "notif-1787709209152-gd5q0",
+      "createdAt": "2026-08-26T01:53:29.152Z",
+      "isRead": true,
+      "recipientRole": "customer",
+      "title": "Service Status Update",
+      "message": "senthil kumaran has reached your service location.",
+      "jobId": "JOB-2026-0001",
+      "type": "worker_reached"
+    },
+    {
+      "id": "notif-1787709204205-q02b7",
+      "createdAt": "2026-08-26T01:53:24.205Z",
+      "isRead": true,
+      "recipientRole": "customer",
+      "title": "Service Status Update",
+      "message": "senthil kumaran is on the way to your location.",
+      "jobId": "JOB-2026-0001",
+      "type": "worker_on_the_way"
+    },
+    {
+      "id": "notif-1787709200942-w4mbt",
+      "createdAt": "2026-08-26T01:53:20.942Z",
+      "isRead": false,
+      "recipientRole": "customer",
+      "title": "Service Status Update",
+      "message": "senthil kumaran has accepted your service request.",
+      "jobId": "JOB-2026-0001",
+      "type": "worker_accepted"
+    },
+    {
+      "id": "notif-1787709174975-thrfl",
+      "createdAt": "2026-08-26T01:52:54.975Z",
+      "isRead": false,
+      "recipientRole": "customer",
+      "title": "Technician Assigned",
+      "message": "Electrician senthil kumaran (8610944373) has been assigned to your request (JOB-2026-0001).",
+      "jobId": "JOB-2026-0001",
+      "type": "worker_assigned"
+    },
+    {
+      "id": "notif-1787709174975-c9q38",
+      "createdAt": "2026-08-26T01:52:54.975Z",
+      "isRead": true,
+      "userId": "usr-work-1787708909316",
+      "recipientRole": "worker",
+      "title": "New Job Assigned",
+      "message": "You have been assigned job JOB-2026-0001 (Motor) at 364/2, vishnunagar, Mudukkumeendanpatti, kovilpatti, Thoothukudi, Tamil Nadu - 628716",
+      "jobId": "JOB-2026-0001",
+      "type": "worker_assigned"
+    },
+    {
+      "id": "notif-1787709122417-12yzm",
+      "createdAt": "2026-08-26T01:52:02.417Z",
+      "isRead": true,
+      "recipientRole": "admin",
+      "title": "New Service Request",
+      "message": "ganeshkumargurusamy619 requested Motor service (JOB-2026-0001)",
+      "jobId": "JOB-2026-0001",
+      "type": "job_created"
+    },
+    {
+      "id": "notif-1787708909316-qo2y1",
+      "createdAt": "2026-08-26T01:48:29.316Z",
+      "isRead": true,
+      "recipientRole": "admin",
+      "title": "New Electrician Added",
+      "message": "senthil kumaran has been enrolled as a field technician.",
+      "type": "salary_updated"
+    }
+  ],
+  "smsLogs": [
+    {
+      "id": "SMS-1787711787490-6mwl",
+      "jobId": "JOB-2026-0002",
+      "customerId": "cust-1787633784331",
+      "customerName": "ganeshkumargurusamy619",
+      "phoneNumber": "+91 98400 00000",
+      "finalAmount": 470,
+      "messageContent": "VoltWork AI (Mudukkumeendanpatti, Kovilpatti - 628716): Dear ganeshkumargurusamy619, your electrical service for Fan Repair (Job: JOB-2026-0002) is complete. Admin approved final bill: ₹470. View invoice & pay online in your portal. Helpline: +91 98765 43210. Thank you!",
+      "smsStatus": "Sent",
+      "type": "BILL",
+      "recipientType": "customer",
+      "sentByAdminId": "usr-admin-01",
+      "sentByName": "Master Electrician & Admin",
+      "sentAt": "2026-08-26T02:36:27.490Z",
+      "providerResponse": "HTTP 200 OK: Delivered to +91 98400 00000 via Carrier Gateway [SID: SM635592177]"
+    },
+    {
+      "id": "SMS-SAL-1787711479310-1yy8",
+      "salaryId": "SAL-202608-001",
+      "workerId": "work-1787708909316",
+      "workerName": "senthil kumaran",
+      "phoneNumber": "8610944373",
+      "finalAmount": 19500,
+      "messageContent": "Dear senthil kumaran, Your salary for 2026-08 has been updated. Total: ₹19500. Paid: ₹19500. Pending: ₹0. - VoltWork AI",
+      "smsStatus": "Sent",
+      "type": "SALARY",
+      "recipientType": "worker",
+      "sentByAdminId": "usr-admin-01",
+      "sentByName": "Master Electrician & Admin",
+      "sentAt": "2026-08-26T02:31:19.310Z",
+      "providerResponse": "HTTP 200 OK: Delivered to 8610944373 via Carrier Gateway [SID: SM634610234]"
+    },
+    {
+      "id": "SMS-SAL-1787710371462-yhgd",
+      "salaryId": "SAL-202608-001",
+      "workerId": "work-1787708909316",
+      "workerName": "senthil kumaran",
+      "phoneNumber": "8610944373",
+      "finalAmount": 19500,
+      "messageContent": "Dear senthil kumaran, Your salary for 2026-08 has been updated. Total: ₹19500. Paid: ₹19500. Pending: ₹0. - VoltWork AI",
+      "smsStatus": "Sent",
+      "type": "SALARY",
+      "recipientType": "worker",
+      "sentByAdminId": "usr-admin-01",
+      "sentByName": "Master Electrician & Admin",
+      "sentAt": "2026-08-26T02:12:51.462Z",
+      "providerResponse": "HTTP 200 OK: Delivered to 8610944373 via Carrier Gateway [SID: SM134641994]"
+    },
+    {
+      "id": "SMS-1787709458011-z3d6",
+      "jobId": "JOB-2026-0001",
+      "customerId": "cust-1787633784331",
+      "customerName": "ganeshkumargurusamy619",
+      "phoneNumber": "+91 98400 00000",
+      "finalAmount": 800,
+      "messageContent": "VoltWork AI (Mudukkumeendanpatti, Kovilpatti - 628716): Dear ganeshkumargurusamy619, your electrical service for Motor (Job: JOB-2026-0001) is complete. Admin approved final bill: ₹800. View invoice & pay online in your portal. Helpline: +91 98765 43210. Thank you!",
+      "smsStatus": "Sent",
+      "type": "BILL",
+      "recipientType": "customer",
+      "sentByAdminId": "usr-admin-01",
+      "sentByName": "Master Electrician & Admin",
+      "sentAt": "2026-08-26T01:57:38.011Z",
+      "providerResponse": "HTTP 200 OK: Delivered to +91 98400 00000 via Carrier Gateway [SID: SM961794307]"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "audit-1787711883866-z0vin",
+      "timestamp": "2026-08-26T02:38:03.866Z",
+      "userId": "usr-work-1787708909316",
+      "userName": "senthil kumaran",
+      "role": "worker",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (senthil@gmail.com) via worker portal"
+    },
+    {
+      "id": "audit-1787711849607-646f5",
+      "timestamp": "2026-08-26T02:37:29.607Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787711820074-ty0bj",
+      "timestamp": "2026-08-26T02:37:00.074Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "PAYMENT_RECORDED",
+      "jobId": "JOB-2026-0002",
+      "newValue": "₹470 via upi",
+      "details": "Payment of ₹470 recorded for job JOB-2026-0002"
+    },
+    {
+      "id": "audit-1787711802911-eyabe",
+      "timestamp": "2026-08-26T02:36:42.911Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (ganeshkumargurusamy619@gmail.com) via customer portal"
+    },
+    {
+      "id": "audit-1787711787490-z9wk4",
+      "timestamp": "2026-08-26T02:36:27.490Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "SMS_SENT_TO_CUSTOMER",
+      "jobId": "JOB-2026-0002",
+      "details": "SMS dispatched to customer ganeshkumargurusamy619 (+91 98400 00000) for bill ₹470"
+    },
+    {
+      "id": "audit-1787711774523-vqlnw",
+      "timestamp": "2026-08-26T02:36:14.523Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "JOB_VERIFIED_BILL_APPROVED",
+      "jobId": "JOB-2026-0002",
+      "previousValue": "Suggested ₹470",
+      "newValue": "₹470",
+      "details": "Admin Master Electrician & Admin approved final amount ₹470 for job JOB-2026-0002"
+    },
+    {
+      "id": "audit-1787711761744-tp560",
+      "timestamp": "2026-08-26T02:36:01.744Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787711750093-g7bo7",
+      "timestamp": "2026-08-26T02:35:50.093Z",
+      "userId": "usr-work-1787708909316",
+      "userName": "senthil kumaran",
+      "role": "worker",
+      "action": "JOB_WORK_SUBMITTED",
+      "jobId": "JOB-2026-0002",
+      "details": "senthil kumaran submitted completion details for job JOB-2026-0002"
+    },
+    {
+      "id": "audit-1787711686529-edcxa",
+      "timestamp": "2026-08-26T02:34:46.529Z",
+      "userId": "usr-work-1787708909316",
+      "userName": "senthil kumaran",
+      "role": "worker",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (senthil@gmail.com) via worker portal"
+    },
+    {
+      "id": "audit-1787711676227-ilr5b",
+      "timestamp": "2026-08-26T02:34:36.227Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "JOB_ASSIGNED",
+      "jobId": "JOB-2026-0002",
+      "previousValue": "None",
+      "newValue": "senthil kumaran",
+      "details": "Assigned job JOB-2026-0002 to worker senthil kumaran"
+    },
+    {
+      "id": "audit-1787711642093-6vrz2",
+      "timestamp": "2026-08-26T02:34:02.093Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787711621055-cdie9",
+      "timestamp": "2026-08-26T02:33:41.055Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "JOB_CREATED",
+      "jobId": "JOB-2026-0002",
+      "details": "New electrical service requested: Fan Repair (medium)"
+    },
+    {
+      "id": "audit-1787711585370-5omu6",
+      "timestamp": "2026-08-26T02:33:05.370Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (ganeshkumargurusamy619@gmail.com) via customer portal"
+    },
+    {
+      "id": "audit-1787711479310-6b0k6",
+      "timestamp": "2026-08-26T02:31:19.310Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "SALARY_SMS_SENT",
+      "details": "Salary SMS dispatched to Electrician senthil kumaran (8610944373) for 2026-08"
+    },
+    {
+      "id": "audit-1787711469615-3odny",
+      "timestamp": "2026-08-26T02:31:09.615Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787710389161-dl1un",
+      "timestamp": "2026-08-26T02:13:09.161Z",
+      "userId": "usr-work-1787708909316",
+      "userName": "senthil kumaran",
+      "role": "worker",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (senthil@gmail.com) via worker portal"
+    },
+    {
+      "id": "audit-1787710371462-5rsdh",
+      "timestamp": "2026-08-26T02:12:51.462Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "SALARY_SMS_SENT",
+      "details": "Salary SMS dispatched to Electrician senthil kumaran (8610944373) for 2026-08"
+    },
+    {
+      "id": "audit-1787710344469-7mc9j",
+      "timestamp": "2026-08-26T02:12:24.469Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787710316073-6gf1u",
+      "timestamp": "2026-08-26T02:11:56.073Z",
+      "userId": "usr-work-1787708909316",
+      "userName": "senthil kumaran",
+      "role": "worker",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (senthil@gmail.com) via worker portal"
+    },
+    {
+      "id": "audit-1787710304112-ixfpk",
+      "timestamp": "2026-08-26T02:11:44.112Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "SALARY_PAYOUT",
+      "newValue": "₹19500 via upi",
+      "details": "Disbursed salary ₹19500 to senthil kumaran (2026-08)"
+    },
+    {
+      "id": "audit-1787710291024-6eq9v",
+      "timestamp": "2026-08-26T02:11:31.024Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787710261020-raodl",
+      "timestamp": "2026-08-26T02:11:01.020Z",
+      "userId": "usr-work-1787708909316",
+      "userName": "senthil kumaran",
+      "role": "worker",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (senthil@gmail.com) via worker portal"
+    },
+    {
+      "id": "audit-1787710241503-skmul",
+      "timestamp": "2026-08-26T02:10:41.503Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "SALARY_RECORD_SAVED",
+      "newValue": "Total: ₹19500, Paid: ₹0",
+      "details": "Saved salary for senthil kumaran for period 2026-08"
+    },
+    {
+      "id": "audit-1787710216604-wj1oa",
+      "timestamp": "2026-08-26T02:10:16.604Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787709820161-7elc0",
+      "timestamp": "2026-08-26T02:03:40.161Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (ganeshkumargurusamy619@gmail.com) via customer portal"
+    },
+    {
+      "id": "audit-1787709538198-2nulv",
+      "timestamp": "2026-08-26T01:58:58.198Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787709515741-4l18x",
+      "timestamp": "2026-08-26T01:58:35.741Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "PAYMENT_RECORDED",
+      "jobId": "JOB-2026-0001",
+      "newValue": "₹800 via upi",
+      "details": "Payment of ₹800 recorded for job JOB-2026-0001"
+    },
+    {
+      "id": "audit-1787709482987-ym9ck",
+      "timestamp": "2026-08-26T01:58:02.987Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (ganeshkumargurusamy619@gmail.com) via customer portal"
+    },
+    {
+      "id": "audit-1787709458011-zsxhu",
+      "timestamp": "2026-08-26T01:57:38.011Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "SMS_SENT_TO_CUSTOMER",
+      "jobId": "JOB-2026-0001",
+      "details": "SMS dispatched to customer ganeshkumargurusamy619 (+91 98400 00000) for bill ₹800"
+    },
+    {
+      "id": "audit-1787709447286-d8fj9",
+      "timestamp": "2026-08-26T01:57:27.286Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "JOB_VERIFIED_BILL_APPROVED",
+      "jobId": "JOB-2026-0001",
+      "previousValue": "Suggested ₹900",
+      "newValue": "₹800",
+      "details": "Admin Master Electrician & Admin approved final amount ₹800 for job JOB-2026-0001"
+    },
+    {
+      "id": "audit-1787709404930-b8bxy",
+      "timestamp": "2026-08-26T01:56:44.930Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787709388320-se36t",
+      "timestamp": "2026-08-26T01:56:28.320Z",
+      "userId": "usr-work-1787708909316",
+      "userName": "senthil kumaran",
+      "role": "worker",
+      "action": "JOB_WORK_SUBMITTED",
+      "jobId": "JOB-2026-0001",
+      "details": "senthil kumaran submitted completion details for job JOB-2026-0001"
+    },
+    {
+      "id": "audit-1787709193777-zv4oz",
+      "timestamp": "2026-08-26T01:53:13.777Z",
+      "userId": "usr-work-1787708909316",
+      "userName": "senthil kumaran",
+      "role": "worker",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (senthil@gmail.com) via worker portal"
+    },
+    {
+      "id": "audit-1787709174975-ftdjn",
+      "timestamp": "2026-08-26T01:52:54.975Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "JOB_ASSIGNED",
+      "jobId": "JOB-2026-0001",
+      "previousValue": "None",
+      "newValue": "senthil kumaran",
+      "details": "Assigned job JOB-2026-0001 to worker senthil kumaran"
+    },
+    {
+      "id": "audit-1787709149474-mfi1w",
+      "timestamp": "2026-08-26T01:52:29.474Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787709122417-bd25p",
+      "timestamp": "2026-08-26T01:52:02.417Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "JOB_CREATED",
+      "jobId": "JOB-2026-0001",
+      "details": "New electrical service requested: Motor (medium)"
+    },
+    {
+      "id": "audit-1787708969581-074ku",
+      "timestamp": "2026-08-26T01:49:29.581Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (ganeshkumargurusamy619@gmail.com) via customer portal"
+    },
+    {
+      "id": "audit-1787708909316-o4uia",
+      "timestamp": "2026-08-26T01:48:29.316Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "WORKER_CREATED",
+      "details": "Admin added electrician/worker senthil kumaran (senthil@gmail.com)"
+    },
+    {
+      "id": "audit-1787708822361-bm415",
+      "timestamp": "2026-08-26T01:47:02.361Z",
+      "userId": "usr-admin-01",
+      "userName": "Master Electrician & Admin",
+      "role": "admin",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (admin@voltwork.ai) via admin portal"
+    },
+    {
+      "id": "audit-1787708799782-olwoz",
+      "timestamp": "2026-08-26T01:46:39.783Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (ganeshkumargurusamy619@gmail.com) via customer portal"
+    },
+    {
+      "id": "audit-1787634247614-susld",
+      "timestamp": "2026-08-25T05:04:07.614Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "GOOGLE_OAUTH_LOGIN",
+      "details": "User signed in with Google (ganeshkumargurusamy619@gmail.com) via customer portal"
+    },
+    {
+      "id": "audit-1787633784331-pg8cg",
+      "timestamp": "2026-08-25T04:56:24.331Z",
+      "userId": "usr-google-1787633784331",
+      "userName": "ganeshkumargurusamy619",
+      "role": "customer",
+      "action": "GOOGLE_OAUTH_REGISTER",
+      "details": "New customer account created via Google OAuth: ganeshkumargurusamy619 (ganeshkumargurusamy619@gmail.com)"
+    }
+  ],
+  "locationTracking": [],
+  "companySettings": {
+    "name": "VoltWork AI Electrical Services",
+    "tagline": "Smart Electrical Service & Diagnostics",
+    "adminLocation": {
+      "village": "Mudukkumeendanpatti",
+      "taluk": "Kovilpatti",
+      "district": "Thoothukudi",
+      "state": "Tamilnadu",
+      "pincode": "628716",
+      "formattedAddress": "Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716",
+      "latitude": 9.17,
+      "longitude": 77.87
+    },
+    "serviceArea": {
+      "defaultLocation": "Kovilpatti, Thoothukudi District, Tamilnadu - 628716",
+      "district": "Thoothukudi",
+      "state": "Tamilnadu",
+      "primaryPincode": "628716",
+      "serviceRadiusKm": 25,
+      "serviceZones": [
+        "628716 (Mudukkumeendanpatti / HQ)",
+        "628501 (Kovilpatti Main)",
+        "628502 (Kovilpatti North / Industrial)",
+        "628503 (Kovilpatti East)",
+        "628720 (Kayathar Sub-Division)",
+        "628714 (Kadambur Zone)",
+        "628552 (Ilayarasanendal)"
+      ]
+    },
+    "businessAddress": "Mudukkumeendanpatti, Kovilpatti, Thoothukudi District, Tamilnadu - 628716",
+    "phone": "+91 98765 43210",
+    "email": "admin@voltwork.ai",
+    "gstin": "33AAAAA0000A1Z5",
+    "registrationNumber": "TN-EL-2026-9941",
+    "timezone": "Asia/Kolkata",
+    "timezoneOffset": "UTC+5:30",
+    "updatedAt": "2026-08-25T05:10:00.000Z"
+  }
+}

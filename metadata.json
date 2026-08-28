@@ -1,0 +1,10 @@
+{
+  "name": "VoltWork AI - Electrical Service & Workforce Management",
+  "description": "AI-powered electrical service, dispatch, worker tracking, attendance, salary and billing platform.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
