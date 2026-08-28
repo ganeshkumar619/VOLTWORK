@@ -28,6 +28,7 @@ export type AttendanceStatus = 'present' | 'absent' | 'leave' | 'half_day';
 export interface User {
   id: string;
   name: string;
+  username?: string;
   email: string;
   phone: string;
   role: UserRole;
@@ -93,6 +94,7 @@ export interface CustomerProfile {
   id: string;
   userId: string;
   name: string;
+  username?: string;
   phone: string;
   email: string;
   address: string;
@@ -123,6 +125,8 @@ export interface WorkerProfile {
   id: string;
   userId: string;
   name: string;
+  username?: string;
+  workerHandle?: string;
   phone: string;
   email: string;
   avatarUrl?: string;

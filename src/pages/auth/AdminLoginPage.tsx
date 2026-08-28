@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Shield,
   Lock,
-  Mail,
+  User,
   ArrowRight,
   ArrowLeft,
   Zap,
@@ -12,14 +12,10 @@ import {
   CheckCircle2,
   KeyRound,
   X,
-  User,
   Wrench,
-  Sparkles,
 } from 'lucide-react';
 import { useAuth } from '../../lib/auth.tsx';
 import { useI18n } from '../../lib/i18n.tsx';
-import { apiRequest } from '../../lib/api.ts';
-import { GoogleAccountPickerModal } from '../../components/GoogleAccountPickerModal.tsx';
 
 interface AdminLoginPageProps {
   onNavigate: (page: string) => void;
@@ -30,19 +26,18 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
   onNavigate,
   onLoginSuccess,
 }) => {
-  const { login, loginWithGoogle, forgotPassword } = useAuth();
+  const { login, forgotPassword } = useAuth();
   const { t } = useI18n();
 
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState('');
 
   // Forgot password state
   const [forgotModalOpen, setForgotModalOpen] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotIdentifier, setForgotIdentifier] = useState('');
   const [forgotStep, setForgotStep] = useState<'verify' | 'reset' | 'success'>('verify');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -51,16 +46,11 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
   const [forgotSuccessMsg, setForgotSuccessMsg] = useState('');
   const [verifiedUserName, setVerifiedUserName] = useState('');
 
-  // Google identity modal (fallback for custom email testing)
-  const [googleModalOpen, setGoogleModalOpen] = useState(false);
-  const [customGoogleEmail, setCustomGoogleEmail] = useState('');
-  const [customGoogleName, setCustomGoogleName] = useState('');
-
-  // Email & Password Submit for Admin
+  // Admin Username & Password Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError('Please enter your admin email and password');
+    if (!identifier.trim() || !password) {
+      setError('Please enter your Admin username and password');
       return;
     }
 
@@ -68,83 +58,29 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
     setError('');
 
     try {
-      const user = await login(email, password, 'admin');
-      onLoginSuccess(user.role);
+      const res = await login(identifier.trim(), password, 'admin');
+      onLoginSuccess(res.user.role);
     } catch (err: any) {
-      setError(err.message || 'Admin login failed. Please verify credentials.');
+      setError(err.message || 'Admin login failed. Please verify username and password.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Google Sign-In with Admin verification
-  const handleGoogleSignIn = async () => {
-    setGoogleLoading(true);
-    setError('');
-
-    try {
-      const oauthConfig = await apiRequest('/api/auth/google/url?prompt=select_account').catch(() => ({ hasClientId: false, url: '' }));
-
-      if (oauthConfig.hasClientId && oauthConfig.url) {
-        // Ensure prompt=select_account is in the OAuth provider configuration URL
-        const authUrl = new URL(oauthConfig.url);
-        authUrl.searchParams.set('prompt', 'select_account');
-        const authWindow = window.open(
-          authUrl.toString(),
-          'google_oauth_popup',
-          'width=500,height=600,menubar=no,toolbar=no,status=no'
-        );
-
-        if (!authWindow) {
-          setGoogleModalOpen(true);
-        }
-      } else {
-        setGoogleModalOpen(true);
-      }
-    } catch (err: any) {
-      console.warn('Fallback to interactive Google identity modal:', err);
-      setGoogleModalOpen(true);
-    } finally {
-      setGoogleLoading(false);
-    }
-  };
-
-  const executeGoogleAuth = async (account: { email: string; name: string; avatarUrl?: string }) => {
-    setGoogleLoading(true);
-    setError('');
-
-    try {
-      const user = await loginWithGoogle(
-        {
-          email: account.email,
-          name: account.name || account.email.split('@')[0],
-          avatarUrl: account.avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(account.email)}`,
-        },
-        'admin' // Enforce Admin role check
-      );
-      setGoogleModalOpen(false);
-      onLoginSuccess(user.role);
-    } catch (err: any) {
-      setError(err.message || 'Access Denied. Not an Admin account.');
-    } finally {
-      setGoogleLoading(false);
-    }
-  };
-
   // Forgot password handlers
-  const handleVerifyEmail = async (e: React.FormEvent) => {
+  const handleVerifyIdentifier = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!forgotEmail.trim()) {
-      setForgotError('Please enter your admin email');
+    if (!forgotIdentifier.trim()) {
+      setForgotError('Please enter your admin username or email');
       return;
     }
     setForgotLoading(true);
     setForgotError('');
     try {
-      const res = await forgotPassword(forgotEmail.trim());
+      const res = await forgotPassword(forgotIdentifier.trim());
       if (res.userFound) {
         if (res.role !== 'admin') {
-          setForgotError('This email is not registered as an Administrator.');
+          setForgotError('This ID is not registered as an Administrator.');
           return;
         }
         setVerifiedUserName(res.name || 'Admin');
@@ -172,10 +108,10 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
     setForgotLoading(true);
     setForgotError('');
     try {
-      const res = await forgotPassword(forgotEmail.trim(), newPassword);
+      const res = await forgotPassword(forgotIdentifier.trim(), newPassword);
       setForgotSuccessMsg(res.message || 'Admin password updated successfully!');
       setForgotStep('success');
-      setEmail(forgotEmail.trim());
+      setIdentifier(forgotIdentifier.trim());
       setPassword(newPassword);
     } catch (err: any) {
       setForgotError(err.message || 'Failed to update password');
@@ -234,7 +170,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
             {t('Admin Sign In', 'Administrator Sign In')}
           </h2>
           <p className="text-xs text-slate-400 mt-1 font-medium">
-            {t('Authorized personnel only • Master electrical dispatch & system control', 'Authorized personnel only • Master electrical dispatch & system control')}
+            {t('Authorized Master Admin • Secure Username & Password Access', 'Authorized Master Admin • Secure Username & Password Access')}
           </p>
         </div>
 
@@ -246,121 +182,78 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
           </div>
         )}
 
-        {/* Continue with Google */}
-        <div className="space-y-4">
+        {/* Username & Password Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+              {t('Admin Username / ID', 'Admin Username / ID')}
+            </label>
+            <div className="relative group">
+              <User className="w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 absolute left-3.5 top-3 transition-colors" />
+              <input
+                type="text"
+                required
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                placeholder="Enter admin username"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 shadow-inner transition duration-200 font-medium"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300">
+                {t('Password', 'Password')}
+              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  setForgotIdentifier(identifier || 'admin');
+                  setForgotModalOpen(true);
+                }}
+                className="text-[11px] text-cyan-400 hover:text-cyan-300 font-semibold hover:underline transition cursor-pointer"
+              >
+                {t('Forgot Password?', 'Forgot Password?')}
+              </button>
+            </div>
+
+            <div className="relative group">
+              <Lock className="w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 absolute left-3.5 top-3 transition-colors" />
+              <input
+                type={showPassword ? 'text' : 'password'}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 shadow-inner transition duration-200"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3.5 top-3 text-slate-500 hover:text-slate-300 transition cursor-pointer"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
           <button
-            type="button"
-            onClick={handleGoogleSignIn}
-            disabled={googleLoading || loading}
-            className="w-full py-3 px-4 rounded-xl bg-white hover:bg-slate-100 active:scale-[0.99] text-slate-900 text-xs font-bold transition duration-200 flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_25px_rgba(34,211,238,0.3)] disabled:opacity-50 cursor-pointer"
+            type="submit"
+            disabled={loading}
+            className="w-full mt-2 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 text-xs font-black uppercase tracking-wider shadow-[0_0_20px_rgba(34,211,238,0.35)] hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] transition duration-200 flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
           >
-            {googleLoading ? (
-              <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
+            {loading ? (
+              <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
-                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
-                  <path
-                    fill="#4285F4"
-                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                  />
-                  <path
-                    fill="#34A853"
-                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                  />
-                  <path
-                    fill="#FBBC05"
-                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-                  />
-                  <path
-                    fill="#EA4335"
-                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                  />
-                </svg>
-                <span className="tracking-wide">{t('Continue with Google', 'Admin Google Sign In')}</span>
+                <span>{t('Admin Sign In', 'Sign In as Admin')}</span>
+                <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
-
-          <div className="relative flex items-center justify-center my-4">
-            <div className="w-full border-t border-white/10" />
-            <span className="absolute px-3 bg-[#090e1a] text-[10px] font-mono uppercase tracking-widest text-slate-500">
-              {t('OR', 'OR ADMIN CREDENTIALS')}
-            </span>
-          </div>
-
-          {/* Email & Password Form */}
-          <form onSubmit={handleSubmit} className="space-y-3.5">
-            <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5">
-                {t('Email Address', 'Admin Email')}
-              </label>
-              <div className="relative group">
-                <Mail className="w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 absolute left-3.5 top-3 transition-colors" />
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@voltwork.ai"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 shadow-inner transition duration-200"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300">
-                  {t('Password', 'Password')}
-                </label>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setForgotEmail(email || '');
-                    setForgotModalOpen(true);
-                  }}
-                  className="text-[11px] text-cyan-400 hover:text-cyan-300 font-semibold hover:underline transition cursor-pointer"
-                >
-                  {t('Forgot Password?', 'Forgot Password?')}
-                </button>
-              </div>
-
-              <div className="relative group">
-                <Lock className="w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 absolute left-3.5 top-3 transition-colors" />
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 shadow-inner transition duration-200"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3 text-slate-500 hover:text-slate-300 transition cursor-pointer"
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading || googleLoading}
-              className="w-full mt-2 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 text-xs font-black uppercase tracking-wider shadow-[0_0_20px_rgba(34,211,238,0.35)] hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] transition duration-200 flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
-            >
-              {loading ? (
-                <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
-              ) : (
-                <>
-                  <span>{t('Admin Sign In', 'Sign In as Admin')}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
-          </form>
-        </div>
+        </form>
 
         {/* Role Portal Switcher Links */}
         <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
@@ -415,23 +308,23 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
             )}
 
             {forgotStep === 'verify' && (
-              <form onSubmit={handleVerifyEmail} className="space-y-4">
+              <form onSubmit={handleVerifyIdentifier} className="space-y-4">
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  {t('Enter your registered Admin email address to verify administrative identity.', 'Enter your registered Admin email address to verify administrative identity.')}
+                  {t('Enter your registered Admin username or email to verify administrative identity.', 'Enter your registered Admin username or email to verify administrative identity.')}
                 </p>
                 <div>
                   <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-                    {t('Admin Email', 'Admin Email')}
+                    {t('Admin Username / ID', 'Admin Username / ID')}
                   </label>
                   <div className="relative">
-                    <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
+                    <User className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
                     <input
-                      type="email"
+                      type="text"
                       required
-                      value={forgotEmail}
-                      onChange={(e) => setForgotEmail(e.target.value)}
-                      placeholder="admin@voltwork.ai"
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                      value={forgotIdentifier}
+                      onChange={(e) => setForgotIdentifier(e.target.value)}
+                      placeholder="admin"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-medium"
                     />
                   </div>
                 </div>
@@ -453,7 +346,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
                       <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
                     ) : (
                       <>
-                        <span>{t('Verify Email', 'Verify Identity')}</span>
+                        <span>{t('Verify Identity', 'Verify Identity')}</span>
                         <ArrowRight className="w-4 h-4" />
                       </>
                     )}
@@ -466,7 +359,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
               <form onSubmit={handleResetPassword} className="space-y-3.5">
                 <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
-                  <span>{t('Admin verified:', 'Admin verified:')} <strong>{verifiedUserName}</strong> ({forgotEmail})</span>
+                  <span>{t('Admin verified:', 'Admin verified:')} <strong>{verifiedUserName}</strong> ({forgotIdentifier})</span>
                 </div>
 
                 <div>
@@ -541,19 +434,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
           </div>
         </div>
       )}
-
-      {/* Google Account Selector Dialog */}
-      <GoogleAccountPickerModal
-        isOpen={googleModalOpen}
-        onClose={() => {
-          setGoogleModalOpen(false);
-          setError('');
-        }}
-        role="admin"
-        onSelectAccount={executeGoogleAuth}
-        errorMessage={error}
-        loading={googleLoading}
-      />
     </div>
   );
 };
+

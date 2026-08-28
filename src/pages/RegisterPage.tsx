@@ -163,10 +163,32 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate, onRegist
       errs.name = 'Please enter your full name';
     }
 
-    // 2. Email Validation
+    // 2. Original Email Validation
+    const cleanEmail = formData.email.trim().toLowerCase();
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
-      errs.email = 'Please enter a valid email address';
+    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
+      errs.email = 'Please enter a valid original email address (e.g. name@gmail.com)';
+    } else if (cleanEmail === 'ganeshkumargurusamy619@gmail.com') {
+      errs.email = 'This email is reserved for Admin. Please use your personal original email.';
+    } else {
+      const [localPart, domainPart] = cleanEmail.split('@');
+      const disposableDomains = [
+        'tempmail.com', '10minutemail.com', 'guerrillamail.com', 'mailinator.com',
+        'throwaway.com', 'yopmail.com', 'test.com', 'example.com', 'fake.com',
+        'dispostable.com', 'trashmail.com', 'sharklasers.com', 'grr.la',
+        'guerrillamail.biz', 'guerrillamail.net', 'guerrillamail.org', 'spam4.me',
+        'temp-mail.org', 'fakemailgenerator.com', 'inboxkitten.com', 'burnermail.io',
+        'getnada.com', 'mohmal.com', 'crazymailing.com', 'disposablemail.com',
+        'maildrop.cc', 'mytemp.email', 'tempinbox.com', 'emailondeck.com',
+        'fakeemail.com', 'generator.email', 'tempail.com', 'trashmail.net'
+      ];
+      const dummyLocalParts = ['test', 'testing', 'fake', 'dummy', 'asdf', 'qwerty', 'temp', 'sample', 'user123', 'admin'];
+
+      if (disposableDomains.includes(domainPart)) {
+        errs.email = 'Temporary or disposable email addresses are not allowed. Please enter your original email.';
+      } else if (dummyLocalParts.includes(localPart)) {
+        errs.email = 'Please enter your original personal email, not a dummy or test email.';
+      }
     }
 
     // 3. Phone Number Validation (10 digits Indian format, starts with 6,7,8,9)
@@ -313,9 +335,14 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate, onRegist
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* Email */}
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
-                {t('Email Address', 'Email Address')} <span className="text-rose-400">*</span>
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300">
+                  {t('Original Email Address', 'Original Email Address')} <span className="text-rose-400">*</span>
+                </label>
+                <span className="text-[10px] text-cyan-400 font-medium">
+                  {t('Active Email Only', 'Active Email Only')}
+                </span>
+              </div>
               <div className="relative group">
                 <Mail className="w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 absolute left-3.5 top-3 transition-colors" />
                 <input
@@ -325,15 +352,18 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate, onRegist
                     setFormData({ ...formData, email: e.target.value });
                     if (errors.email) setErrors({ ...errors, email: undefined });
                   }}
-                  placeholder="name@domain.com"
+                  placeholder="yourname@gmail.com"
                   className={`w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border text-xs text-white placeholder-slate-500 focus:outline-none transition ${
                     errors.email ? 'border-rose-500 focus:border-rose-400 ring-1 ring-rose-500/50' : 'border-white/10 focus:border-cyan-400'
                   }`}
                 />
               </div>
+              <p className="text-[10px] text-slate-400 mt-1 leading-tight">
+                {t('Enter your genuine personal email for booking updates & invoices.', 'Enter your genuine personal email for booking updates & invoices.')}
+              </p>
               {errors.email && (
                 <p className="text-[11px] text-rose-400 font-medium mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3.5 h-3.5" />
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   {errors.email}
                 </p>
               )}

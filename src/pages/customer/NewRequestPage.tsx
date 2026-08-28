@@ -382,50 +382,50 @@ export const NewRequestPage: React.FC<NewRequestPageProps> = ({ onSuccess, onCan
             </div>
           )}
 
-          {/* Quick Area Presets */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[10px] text-zinc-400 font-semibold uppercase tracking-wider">{t('Quick Fill', 'Quick Fill')}:</span>
-            <button
-              type="button"
-              onClick={() => {
-                setLatitude(9.1726);
-                setLongitude(77.8711);
-                setAddress('Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716');
-                setGeoStatus('detected');
-                setGeoMessage('GPS location set to Mudukkumeendanpatti HQ ✓');
-                if (formErrors.address) {
-                  setFormErrors((prev) => {
-                    const next = { ...prev };
-                    delete next.address;
-                    return next;
-                  });
-                }
-              }}
-              className="px-2.5 py-1 rounded-lg bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/40 text-[11px] text-cyan-300 font-bold transition cursor-pointer"
-            >
-              ⚡ Mudukkumeendanpatti HQ (628716)
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setLatitude(9.1712);
-                setLongitude(77.8707);
-                setAddress('Bazaar Street, Kovilpatti, Thoothukudi District, Tamilnadu - 628501');
-                setGeoStatus('detected');
-                setGeoMessage('GPS location set to Kovilpatti Main ✓');
-                if (formErrors.address) {
-                  setFormErrors((prev) => {
-                    const next = { ...prev };
-                    delete next.address;
-                    return next;
-                  });
-                }
-              }}
-              className="px-2.5 py-1 rounded-lg bg-blue-950/80 hover:bg-blue-900 border border-blue-500/40 text-[11px] text-blue-300 font-bold transition cursor-pointer"
-            >
-              ⚡ Kovilpatti Town (628501)
-            </button>
-          </div>
+            {/* Quick Area Presets */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[10px] text-zinc-400 font-semibold uppercase tracking-wider">{t('Quick Fill', 'Quick Fill')}:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setLatitude(9.1726);
+                  setLongitude(77.8711);
+                  setAddress('Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716');
+                  setGeoStatus('detected');
+                  setGeoMessage(t('GPS Captured ✓', 'GPS location set to Mudukkumeendanpatti HQ ✓'));
+                  if (formErrors.address) {
+                    setFormErrors((prev) => {
+                      const next = { ...prev };
+                      delete next.address;
+                      return next;
+                    });
+                  }
+                }}
+                className="px-2.5 py-1 rounded-lg bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/40 text-[11px] text-cyan-300 font-bold transition cursor-pointer"
+              >
+                ⚡ {t('Mudukkumeendanpatti HQ (628716)', 'Mudukkumeendanpatti HQ (628716)')}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setLatitude(9.1712);
+                  setLongitude(77.8707);
+                  setAddress('Bazaar Street, Kovilpatti, Thoothukudi District, Tamilnadu - 628501');
+                  setGeoStatus('detected');
+                  setGeoMessage(t('GPS Captured ✓', 'GPS location set to Kovilpatti Main ✓'));
+                  if (formErrors.address) {
+                    setFormErrors((prev) => {
+                      const next = { ...prev };
+                      delete next.address;
+                      return next;
+                    });
+                  }
+                }}
+                className="px-2.5 py-1 rounded-lg bg-blue-950/80 hover:bg-blue-900 border border-blue-500/40 text-[11px] text-blue-300 font-bold transition cursor-pointer"
+              >
+                ⚡ {t('Kovilpatti Town (628501)', 'Kovilpatti Town (628501)')}
+              </button>
+            </div>
 
           <div className="space-y-3">
             <div>

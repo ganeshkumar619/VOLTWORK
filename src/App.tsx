@@ -374,6 +374,7 @@ const AppContent: React.FC = () => {
                         <CustomerHistoryPage onSelectJob={handleSelectJob} />
                       )}
                       {activeTab === 'profile' && <CustomerProfilePage />}
+                      {activeTab === 'categories' && <CategoriesPage />}
                     </>
                   )}
                 </div>
@@ -395,6 +396,7 @@ const AppContent: React.FC = () => {
                       {activeTab === 'attendance' && <WorkerAttendancePage />}
                       {activeTab === 'salary' && <WorkerSalaryPage />}
                       {activeTab === 'profile' && <WorkerProfilePage />}
+                      {activeTab === 'categories' && <CategoriesPage />}
                     </>
                   )}
                 </div>

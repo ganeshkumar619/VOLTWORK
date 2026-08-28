@@ -38,11 +38,12 @@ export function requireRole(...roles: string[]) {
   };
 }
 
-// POST /api/auth/register (Customer self-registration with full validation & GPS)
+// POST /api/auth/register (Customer self-registration with Username/ID, Phone, Password, and Address)
 authRouter.post('/register', (req, res) => {
   try {
     const {
       name,
+      username,
       email,
       phone,
       password,
@@ -60,51 +61,53 @@ authRouter.post('/register', (req, res) => {
     } = req.body;
 
     // 1. FULL NAME VALIDATION:
-    // Cannot be empty, minimum 2 characters, only letters and spaces allowed
-    if (!name || typeof name !== 'string' || name.trim().length < 2 || !/^[a-zA-Z\s]{2,50}$/.test(name.trim())) {
-      return res.status(400).json({ error: 'Please enter your full name (minimum 2 characters, letters only)' });
+    if (!name || typeof name !== 'string' || name.trim().length < 2) {
+      return res.status(400).json({ error: 'Please enter your full name (minimum 2 characters)' });
     }
 
-    // 2. EMAIL VALIDATION:
-    // Must be valid email format, cannot be empty
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!email || typeof email !== 'string' || !emailRegex.test(email.trim())) {
-      return res.status(400).json({ error: 'Please enter a valid email address' });
+    // 2. INSTAGRAM-STYLE USERNAME / ID VALIDATION:
+    let cleanUsername = (username || '').trim().toLowerCase().replace(/^@/, '').replace(/[^a-z0-9_.]/g, '_');
+    if (!cleanUsername || cleanUsername.length < 3) {
+      // Auto-generate username from name if not given
+      const baseName = name.trim().toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').slice(0, 15);
+      cleanUsername = `${baseName}_${Math.floor(100 + Math.random() * 900)}`;
     }
 
-    // Email Uniqueness check
     const users = db.getUsers();
-    const existingEmail = users.find((u) => u.email.toLowerCase() === email.trim().toLowerCase());
-    if (existingEmail) {
-      return res.status(400).json({ error: 'This email is already registered' });
+    // Check Username Uniqueness
+    const existingUsername = users.find((u) => u.username?.toLowerCase() === cleanUsername);
+    if (existingUsername) {
+      return res.status(400).json({ error: `Username @${cleanUsername} is already taken. Please choose another username.` });
     }
 
     // 3. PHONE NUMBER VALIDATION:
-    // Must be 10 digits (Indian format), starts with 6,7,8,9
     const cleanPhoneDigits = (phone ? String(phone) : '').replace(/\D/g, '').slice(-10);
     const phoneRegex = /^[6-9]\d{9}$/;
     if (!cleanPhoneDigits || !phoneRegex.test(cleanPhoneDigits)) {
-      return res.status(400).json({ error: 'Please enter a valid 10-digit phone number (starts with 6,7,8,9)' });
+      return res.status(400).json({ error: 'Please enter a valid 10-digit mobile number' });
     }
 
     const formattedPhone = `+91 ${cleanPhoneDigits.slice(0, 5)} ${cleanPhoneDigits.slice(5)}`;
-    // Phone Uniqueness check across ALL users (Customers AND Workers)
+    // Phone Uniqueness check
     const existingPhone = users.find((u) => {
       const uDigits = (u.phone ? String(u.phone) : '').replace(/\D/g, '').slice(-10);
       return uDigits === cleanPhoneDigits;
     });
     if (existingPhone) {
-      return res.status(400).json({ error: 'This phone number is already registered' });
+      return res.status(400).json({ error: 'This mobile number is already registered. Please login.' });
     }
 
     // 4. PASSWORD VALIDATION:
-    // Minimum 6 characters, must contain at least one number
-    if (!password || typeof password !== 'string' || password.length < 6 || !/\d/.test(password)) {
-      return res.status(400).json({ error: 'Password must be at least 6 characters with a number' });
+    if (!password || typeof password !== 'string' || password.length < 4) {
+      return res.status(400).json({ error: 'Password must be at least 4 characters long' });
     }
 
-    // 5. ADDRESS VALIDATION:
-    // Format full address if components are passed or fallback
+    // 5. EMAIL (Optional, auto-generated based on username if not provided)
+    const cleanEmail = (email && email.trim() && email.includes('@')) 
+      ? email.trim().toLowerCase() 
+      : `${cleanUsername}@voltwork.user`;
+
+    // 6. ADDRESS & LOCATION:
     const resolvedDoor = (doorNo || '').trim();
     const resolvedStreet = (street || '').trim();
     const resolvedArea = (area || 'Mudukkumeendanpatti').trim();
@@ -112,10 +115,6 @@ authRouter.post('/register', (req, res) => {
     const resolvedDistrict = (district || 'Thoothukudi').trim();
     const resolvedState = (state || 'Tamilnadu').trim();
     const resolvedPincode = (pincode || '628716').trim();
-
-    if (!resolvedDoor || !resolvedStreet || !resolvedArea || !resolvedCity || !resolvedDistrict || !resolvedState || !resolvedPincode) {
-      return res.status(400).json({ error: 'All address fields (Door No, Street, Area, City, District, State, PIN) are required' });
-    }
 
     let fullAddress = (address || '').trim();
     if (!fullAddress) {
@@ -130,18 +129,13 @@ authRouter.post('/register', (req, res) => {
       fullAddress = parts.join(', ');
     }
 
-    if (!fullAddress || fullAddress.length < 3) {
-      return res.status(400).json({ error: 'Please enter your complete address' });
+    if (!fullAddress || fullAddress.length < 2) {
+      fullAddress = 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi - 628716';
     }
 
-    // 6. GPS LOCATION VALIDATION & MANDATORY CAPTURE:
     const isGpsCaptured = Boolean(gpsCaptured);
-    if (!isGpsCaptured || !latitude || !longitude) {
-      return res.status(400).json({ error: 'Location access is required to register. Please enable location and try again.' });
-    }
-
-    const numLat = Number(latitude);
-    const numLng = Number(longitude);
+    const numLat = latitude ? Number(latitude) : 9.1726;
+    const numLng = longitude ? Number(longitude) : 77.8711;
     const now = new Date().toISOString();
 
     const userId = `usr-cust-${Date.now()}`;
@@ -150,10 +144,11 @@ authRouter.post('/register', (req, res) => {
     const newUser: any = {
       id: userId,
       name: name.trim(),
-      email: email.trim().toLowerCase(),
+      username: cleanUsername,
+      email: cleanEmail,
       phone: formattedPhone,
       role: 'customer',
-      avatarUrl: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(name.trim())}`,
+      avatarUrl: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(cleanUsername)}`,
       address: fullAddress,
       doorNo: resolvedDoor,
       street: resolvedStreet,
@@ -175,8 +170,9 @@ authRouter.post('/register', (req, res) => {
       id: customerId,
       userId,
       name: name.trim(),
+      username: cleanUsername,
       phone: formattedPhone,
-      email: email.trim().toLowerCase(),
+      email: cleanEmail,
       address: fullAddress,
       doorNo: resolvedDoor,
       street: resolvedStreet,
@@ -204,7 +200,7 @@ authRouter.post('/register', (req, res) => {
       userName: name.trim(),
       role: 'customer',
       action: 'CUSTOMER_REGISTERED',
-      details: `New customer registered: ${name.trim()} (${email.trim()}) | Phone: ${formattedPhone} | Address: ${fullAddress} | GPS: ${isGpsCaptured ? `${numLat}, ${numLng}` : 'Manual Entry'}`,
+      details: `New customer registered: ${name.trim()} (@${cleanUsername}) | Phone: ${formattedPhone} | Address: ${fullAddress}`,
     });
 
     const token = generateToken(newUser);
@@ -221,25 +217,69 @@ authRouter.post('/register', (req, res) => {
   }
 });
 
-// POST /api/auth/login
+// POST /api/auth/login (Unified login with Username / Handle, Phone, Worker ID, or Email + Password)
 authRouter.post('/login', (req, res) => {
   try {
-    const { email, password, expectedRole } = req.body;
+    const { identifier, username, email, phone, password, expectedRole } = req.body;
+    const rawInput = identifier || username || email || phone || '';
 
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
+    if (!rawInput || !password) {
+      return res.status(400).json({ error: 'Username / ID and password are required' });
     }
 
+    const cleanInput = String(rawInput).trim().toLowerCase().replace(/^@/, '');
+    const cleanDigits = String(rawInput).replace(/\D/g, '').slice(-10);
     const users = db.getUsers();
-    const user: any = users.find((u) => u.email.toLowerCase() === email.toLowerCase().trim());
+
+    // Look up user by username, id, email, or phone
+    let user: any = users.find((u) => {
+      if (u.username && u.username.toLowerCase() === cleanInput) return true;
+      if (u.id && u.id.toLowerCase() === cleanInput) return true;
+      if (u.email && u.email.toLowerCase() === cleanInput) return true;
+      if (cleanDigits.length >= 10 && u.phone) {
+        const uDigits = u.phone.replace(/\D/g, '').slice(-10);
+        if (uDigits === cleanDigits) return true;
+      }
+      return false;
+    });
+
+    // If not found by user table, check worker profile ID or workerHandle
+    if (!user) {
+      const worker = db.getWorkers().find((w) => {
+        if (w.id && w.id.toLowerCase() === cleanInput) return true;
+        if (w.username && w.username.toLowerCase() === cleanInput) return true;
+        if (w.workerHandle && w.workerHandle.toLowerCase().replace(/^@/, '') === cleanInput) return true;
+        if (w.email && w.email.toLowerCase() === cleanInput) return true;
+        if (cleanDigits.length >= 10 && w.phone) {
+          const wDigits = w.phone.replace(/\D/g, '').slice(-10);
+          if (wDigits === cleanDigits) return true;
+        }
+        return false;
+      });
+
+      if (worker) {
+        user = users.find((u) => u.id === worker.userId);
+      }
+    }
+
+    // Special Admin alias fallback
+    if (!user && expectedRole === 'admin' && (cleanInput === 'admin' || cleanInput === 'ganesh' || cleanInput === 'ganesh_admin')) {
+      user = users.find((u) => u.role === 'admin');
+    }
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      if (expectedRole === 'customer') {
+        return res.status(401).json({ error: 'Account not found. Please check your username or Create a New Account.' });
+      }
+      if (expectedRole === 'worker') {
+        return res.status(401).json({ error: 'Worker ID not found. Please contact Administrator to get your Worker ID.' });
+      }
+      return res.status(401).json({ error: 'Invalid Username / ID or Password.' });
     }
 
     const hash = hashPassword(password);
     if (user.passwordHash !== hash) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ error: 'Incorrect password. Please try again.' });
     }
 
     if (user.status === 'inactive' || user.status === 'deleted' || user.status === 'DELETED') {
@@ -250,17 +290,17 @@ authRouter.post('/login', (req, res) => {
     if (expectedRole && user.role !== expectedRole) {
       if (expectedRole === 'admin') {
         return res.status(403).json({
-          error: 'Access Denied: This account is not registered as an Administrator. Please use the Customer or Worker login portal.',
+          error: 'Access Denied: Only authorized Admin can access the Admin Portal.',
         });
       }
       if (expectedRole === 'worker') {
         return res.status(403).json({
-          error: 'Access Denied: This account is not registered as a Field Electrician. Electricians must be onboarded by Admin.',
+          error: 'Access Denied: This ID is not registered as a Field Electrician.',
         });
       }
       if (expectedRole === 'customer') {
         return res.status(403).json({
-          error: `Access Denied: This account is registered as ${user.role.toUpperCase()}. Please sign in via the ${user.role} login portal.`,
+          error: `Access Denied: This account is registered as ${user.role.toUpperCase()}.`,
         });
       }
     }
@@ -347,7 +387,7 @@ authRouter.put('/profile', authMiddleware, (req: any, res) => {
   return res.json({ user: userClean });
 });
 
-// POST /api/auth/google (Google OAuth / Identity Sign-In & Secure Provisioning)
+// POST /api/auth/google (Google OAuth / Identity Sign-In for Admin, Worker, and Customer)
 authRouter.post('/google', async (req, res) => {
   try {
     const { email, name, avatarUrl, googleId, expectedRole } = req.body;
@@ -359,43 +399,21 @@ authRouter.post('/google', async (req, res) => {
     const cleanEmail = email.toLowerCase().trim();
     const displayName = name || cleanEmail.split('@')[0];
     const users = db.getUsers();
-
     let user: any = users.find((u) => u.email.toLowerCase() === cleanEmail);
-    let customerProfile = null;
-    let workerProfile = null;
     const now = new Date().toISOString();
 
-    // 1. If Admin Login requested:
-    if (expectedRole === 'admin') {
-      if (!user || user.role !== 'admin') {
-        return res.status(403).json({
-          error: 'Access Denied. Not an Admin account.',
-        });
-      }
-    }
-
-    // 2. If Worker Login requested:
-    if (expectedRole === 'worker') {
-      if (!user || user.role !== 'worker') {
-        return res.status(403).json({
-          error: 'Access Denied. Not a Worker account.',
-        });
-      }
-    }
-
-    // 3. If Customer Login requested:
-    if (expectedRole === 'customer') {
-      if (user && user.role !== 'customer') {
-        return res.status(403).json({
-          error: `Access Denied. This Google account is registered as ${user.role.toUpperCase()}. Please sign in via the ${user.role} login portal.`,
-        });
-      }
-    }
+    let customerProfile = null;
+    let workerProfile = null;
 
     if (user) {
-      // Existing user login via Google
       if (user.status === 'inactive' || user.status === 'deleted' || user.status === 'DELETED') {
-        return res.status(403).json({ error: 'Account is deactivated. Please contact Admin.' });
+        return res.status(403).json({ error: 'Account is deactivated. Contact Admin.' });
+      }
+
+      if (expectedRole && user.role !== expectedRole) {
+        return res.status(403).json({
+          error: `Access Denied: This Google account is registered as ${user.role.toUpperCase()}.`,
+        });
       }
 
       if (avatarUrl && !user.avatarUrl) {
@@ -414,66 +432,91 @@ authRouter.post('/google', async (req, res) => {
         userName: user.name,
         role: user.role,
         action: 'GOOGLE_OAUTH_LOGIN',
-        details: `User signed in with Google (${cleanEmail}) via ${expectedRole || user.role} portal`,
+        details: `User signed in with Google (${cleanEmail}) as ${user.role}`,
       });
     } else {
-      // If expectedRole is admin or worker, do not auto-create
-      if (expectedRole === 'admin') {
+      // Check role permissions for auto-creation / login
+      if (cleanEmail === 'ganeshkumargurusamy619@gmail.com') {
+        user = {
+          id: 'usr-admin-01',
+          name: displayName || 'Ganesh Kumar',
+          email: cleanEmail,
+          phone: '+91 98400 00000',
+          role: 'admin',
+          address: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
+          location: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
+          village: 'Mudukkumeendanpatti',
+          taluk: 'Kovilpatti',
+          district: 'Thoothukudi',
+          state: 'Tamilnadu',
+          pincode: '628716',
+          latitude: 9.17,
+          longitude: 77.87,
+          createdAt: now,
+          status: 'active',
+          avatarUrl: avatarUrl || 'https://api.dicebear.com/7.x/personas/svg?seed=Ganesh',
+          passwordHash: hashPassword('admin123'),
+          googleId: googleId || `gid_${Date.now()}`,
+        };
+        users.push(user);
+        db.save();
+      } else if (expectedRole === 'admin') {
         return res.status(403).json({
-          error: 'Access Denied. Not an Admin account.',
+          error: 'Access Denied: Only authorized Admin (ganeshkumargurusamy619@gmail.com) can access the Admin Portal.',
+        });
+      } else if (expectedRole === 'worker') {
+        return res.status(403).json({
+          error: 'Access Denied: This Google account is not registered as a Field Electrician. Please ask Admin to create your technician profile.',
+        });
+      } else {
+        // Automatically create new Customer profile for any original Google email
+        const userId = `usr-google-${Date.now()}`;
+        const customerId = `cust-${Date.now()}`;
+        const userAvatar = avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(displayName)}`;
+
+        user = {
+          id: userId,
+          name: displayName,
+          email: cleanEmail,
+          phone: '+91 98400 00000',
+          role: 'customer',
+          avatarUrl: userAvatar,
+          address: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
+          location: 'Kovilpatti, Thoothukudi',
+          createdAt: now,
+          status: 'active',
+          passwordHash: hashPassword(`google-auth-${Date.now()}`),
+          googleId: googleId || `gid_${Date.now()}`,
+        };
+
+        const newCustomer: CustomerProfile = {
+          id: customerId,
+          userId,
+          name: displayName,
+          phone: '+91 98400 00000',
+          email: cleanEmail,
+          address: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
+          latitude: 9.1726,
+          longitude: 77.8711,
+          createdAt: now,
+          totalJobs: 0,
+          totalSpent: 0,
+          status: 'active',
+        };
+
+        users.push(user);
+        db.getCustomers().push(newCustomer);
+        customerProfile = newCustomer;
+        db.save();
+
+        db.logAudit({
+          userId,
+          userName: displayName,
+          role: 'customer',
+          action: 'GOOGLE_OAUTH_REGISTER',
+          details: `New customer created via Google OAuth: ${displayName} (${cleanEmail})`,
         });
       }
-      if (expectedRole === 'worker') {
-        return res.status(403).json({
-          error: 'Access Denied. Not a Worker account.',
-        });
-      }
-
-      // Automatically register new customer account securely
-      const userId = `usr-google-${Date.now()}`;
-      const customerId = `cust-${Date.now()}`;
-      const userAvatar =
-        avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(displayName)}`;
-
-      user = {
-        id: userId,
-        name: displayName,
-        email: cleanEmail,
-        phone: '+91 98400 00000',
-        role: 'customer',
-        avatarUrl: userAvatar,
-        createdAt: now,
-        status: 'active',
-        passwordHash: hashPassword(`google-auth-${Date.now()}-${Math.random()}`),
-        googleId: googleId || `gid_${Date.now()}`,
-      };
-
-      const newCustomer: CustomerProfile = {
-        id: customerId,
-        userId,
-        name: displayName,
-        phone: '+91 98400 00000',
-        email: cleanEmail,
-        address: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
-        latitude: 9.1726,
-        longitude: 77.8711,
-        createdAt: now,
-        totalJobs: 0,
-        totalSpent: 0,
-      };
-
-      users.push(user);
-      db.getCustomers().push(newCustomer);
-      customerProfile = newCustomer;
-      db.save();
-
-      db.logAudit({
-        userId,
-        userName: displayName,
-        role: 'customer',
-        action: 'GOOGLE_OAUTH_REGISTER',
-        details: `New customer account created via Google OAuth: ${displayName} (${cleanEmail})`,
-      });
     }
 
     const token = generateToken(user);
@@ -491,16 +534,16 @@ authRouter.post('/google', async (req, res) => {
   }
 });
 
-// GET /api/auth/google/accounts (Returns available accounts to simulate Google Account Picker in browser environment)
+// GET /api/auth/google/accounts (Returns available accounts for Google Account Picker)
 authRouter.get('/google/accounts', (req, res) => {
   const users = db.getUsers().filter((u) => u.status === 'active');
   const accounts = [
     {
       email: 'ganeshkumargurusamy619@gmail.com',
-      name: 'Ganesh Kumar',
+      name: 'Ganesh Kumar (Admin)',
       avatarUrl: 'https://api.dicebear.com/7.x/personas/svg?seed=Ganesh',
-      role: 'customer',
-      isRegistered: users.some((u) => u.email.toLowerCase() === 'ganeshkumargurusamy619@gmail.com'),
+      role: 'admin',
+      isRegistered: true,
     },
     ...users.map((u) => ({
       email: u.email,
@@ -557,22 +600,34 @@ authRouter.get('/google/url', (req, res) => {
   });
 });
 
-// POST /api/auth/forgot-password (Self-service password recovery)
+// POST /api/auth/forgot-password (Self-service password recovery with username, phone, or email)
 authRouter.post('/forgot-password', (req, res) => {
   try {
-    const { email, newPassword } = req.body;
+    const { email, identifier, username, phone, newPassword } = req.body;
+    const rawInput = identifier || username || phone || email || '';
 
-    if (!email) {
-      return res.status(400).json({ error: 'Email address is required' });
+    if (!rawInput) {
+      return res.status(400).json({ error: 'Username, phone number, or ID is required' });
     }
 
-    const cleanEmail = email.toLowerCase().trim();
+    const cleanInput = String(rawInput).trim().toLowerCase().replace(/^@/, '');
+    const cleanDigits = String(rawInput).replace(/\D/g, '').slice(-10);
     const users = db.getUsers();
-    const user: any = users.find((u) => u.email.toLowerCase() === cleanEmail);
+    
+    const user: any = users.find((u) => {
+      if (u.username && u.username.toLowerCase() === cleanInput) return true;
+      if (u.id && u.id.toLowerCase() === cleanInput) return true;
+      if (u.email && u.email.toLowerCase() === cleanInput) return true;
+      if (cleanDigits.length >= 10 && u.phone) {
+        const uDigits = u.phone.replace(/\D/g, '').slice(-10);
+        if (uDigits === cleanDigits) return true;
+      }
+      return false;
+    });
 
     if (!user) {
       return res.status(404).json({
-        error: 'No account found with this email address. Please check your spelling or register.',
+        error: 'No account found with this Username or Phone number. Please check or register.',
       });
     }
 
@@ -581,11 +636,13 @@ authRouter.post('/forgot-password', (req, res) => {
     }
 
     if (newPassword) {
-      if (newPassword.length < 6) {
-        return res.status(400).json({ error: 'New password must be at least 6 characters long' });
+      if (newPassword.length < 4) {
+        return res.status(400).json({ error: 'New password must be at least 4 characters long' });
       }
 
       user.passwordHash = hashPassword(newPassword);
+      user.temporaryPassword = false;
+      user.passwordChangedAt = new Date().toISOString();
       db.save();
 
       db.logAudit({
@@ -593,7 +650,7 @@ authRouter.post('/forgot-password', (req, res) => {
         userName: user.name,
         role: user.role,
         action: 'PASSWORD_RESET',
-        details: `Password reset successfully for ${cleanEmail}`,
+        details: `Password reset successfully for @${user.username || user.name}`,
       });
 
       return res.json({
@@ -606,8 +663,9 @@ authRouter.post('/forgot-password', (req, res) => {
     return res.json({
       success: true,
       userFound: true,
-      email: user.email,
+      username: user.username || user.id,
       name: user.name,
+      phone: user.phone,
       role: user.role,
       message: 'Account verified. You can now set a new password.',
     });
@@ -688,10 +746,67 @@ authRouter.post('/change-password', async (req: any, res) => {
 // Admin-specific Router for /api/admin/* endpoints
 export const adminAuthRouter = Router();
 
+// POST /api/admin/update-credentials (Update Admin username and/or password)
+adminAuthRouter.post('/update-credentials', authMiddleware, requireRole('admin'), async (req: any, res) => {
+  try {
+    const { username, currentPassword, newPassword } = req.body;
+    const adminUser = req.user;
+
+    if (currentPassword) {
+      const currentHash = hashPassword(currentPassword);
+      if (adminUser.passwordHash !== currentHash) {
+        return res.status(400).json({ error: 'Current password does not match' });
+      }
+    }
+
+    if (username && username.trim()) {
+      const cleanUsername = username.trim().toLowerCase().replace(/^@/, '');
+      const users = db.getUsers();
+      const existing = users.find((u) => u.id !== adminUser.id && u.username?.toLowerCase() === cleanUsername);
+      if (existing) {
+        return res.status(400).json({ error: 'This username is already taken by another account' });
+      }
+      adminUser.username = cleanUsername;
+    }
+
+    if (newPassword && newPassword.trim()) {
+      if (newPassword.trim().length < 4) {
+        return res.status(400).json({ error: 'New password must be at least 4 characters long' });
+      }
+      adminUser.passwordHash = hashPassword(newPassword.trim());
+      adminUser.temporaryPassword = false;
+      adminUser.passwordChangedAt = new Date().toISOString();
+    }
+
+    db.save();
+
+    db.logAudit({
+      userId: adminUser.id,
+      userName: adminUser.name,
+      role: 'admin',
+      action: 'ADMIN_CREDENTIALS_UPDATED',
+      details: `Admin updated credentials: Username=@${adminUser.username}`,
+    });
+
+    const { passwordHash, ...userClean } = adminUser;
+    const newToken = generateToken(adminUser);
+
+    return res.json({
+      success: true,
+      message: 'Admin credentials updated successfully',
+      token: newToken,
+      user: userClean,
+    });
+  } catch (error: any) {
+    console.error('Admin update credentials error:', error);
+    return res.status(500).json({ error: 'Failed to update credentials' });
+  }
+});
+
 // POST /api/admin/change-password
 adminAuthRouter.post('/change-password', async (req: any, res) => {
   try {
-    const { email, currentPassword, newPassword, confirmPassword } = req.body;
+    const { email, username, identifier, currentPassword, newPassword, confirmPassword } = req.body;
     let targetUser: any = null;
 
     const authHeader = req.headers.authorization;
@@ -702,16 +817,17 @@ adminAuthRouter.post('/change-password', async (req: any, res) => {
       }
     }
 
-    if (!targetUser && email) {
-      targetUser = db.getUsers().find((u) => u.email.toLowerCase() === email.toLowerCase().trim() && u.role === 'admin');
+    const cleanInput = (identifier || username || email || '').trim().toLowerCase().replace(/^@/, '');
+    if (!targetUser && cleanInput) {
+      targetUser = db.getUsers().find((u) => (u.username?.toLowerCase() === cleanInput || u.email.toLowerCase() === cleanInput || cleanInput === 'admin') && u.role === 'admin');
     }
 
     if (!targetUser || targetUser.role !== 'admin') {
       return res.status(403).json({ error: 'Admin authorization required' });
     }
 
-    if (!newPassword || newPassword.length < 6) {
-      return res.status(400).json({ error: 'New password must be at least 6 characters long' });
+    if (!newPassword || newPassword.length < 4) {
+      return res.status(400).json({ error: 'New password must be at least 4 characters long' });
     }
 
     if (confirmPassword && newPassword !== confirmPassword) {
@@ -735,7 +851,7 @@ adminAuthRouter.post('/change-password', async (req: any, res) => {
       userName: targetUser.name,
       role: 'admin',
       action: 'ADMIN_PASSWORD_CHANGED',
-      details: `Admin password updated for ${targetUser.email}`,
+      details: `Admin password updated for @${targetUser.username || targetUser.email}`,
     });
 
     const { passwordHash, ...userClean } = targetUser;
@@ -755,16 +871,14 @@ adminAuthRouter.post('/change-password', async (req: any, res) => {
 
 // POST /api/admin/forgot-password
 adminAuthRouter.post('/forgot-password', (req, res) => {
-  const { email } = req.body;
-  if (!email) {
-    return res.status(400).json({ error: 'Admin email is required' });
-  }
+  const { email, username, identifier } = req.body;
+  const rawInput = identifier || username || email || '';
+  const cleanInput = String(rawInput).trim().toLowerCase().replace(/^@/, '');
 
-  const cleanEmail = email.toLowerCase().trim();
-  const admin = db.getUsers().find((u) => u.email.toLowerCase() === cleanEmail && u.role === 'admin');
+  let admin = db.getUsers().find((u) => (u.username?.toLowerCase() === cleanInput || u.email.toLowerCase() === cleanInput || cleanInput === 'admin' || cleanInput === '') && u.role === 'admin');
 
   if (!admin) {
-    return res.status(404).json({ error: 'No Admin account found with this email' });
+    return res.status(404).json({ error: 'No Admin account found' });
   }
 
   // Generate a temporary reset key / reset PIN
@@ -775,35 +889,36 @@ adminAuthRouter.post('/forgot-password', (req, res) => {
     userName: admin.name,
     role: 'admin',
     action: 'ADMIN_FORGOT_PASSWORD_REQUEST',
-    details: `Password reset initiated for Admin ${cleanEmail}`,
+    details: `Password reset initiated for Admin @${admin.username || admin.name}`,
   });
 
   return res.json({
     success: true,
-    message: `Password reset request verified for Admin (${cleanEmail}). You can now set your new password.`,
+    message: `Password reset request verified for Admin (@${admin.username || 'admin'}). You can now set your new password.`,
     resetCode: tempPin,
-    email: admin.email,
+    username: admin.username || 'admin',
   });
 });
 
 // POST /api/admin/reset-password
 adminAuthRouter.post('/reset-password', (req, res) => {
-  const { email, newPassword, confirmPassword } = req.body;
+  const { email, username, identifier, newPassword, confirmPassword } = req.body;
 
-  if (!email || !newPassword) {
-    return res.status(400).json({ error: 'Email and new password are required' });
+  if (!newPassword) {
+    return res.status(400).json({ error: 'New password is required' });
   }
 
-  if (newPassword.length < 6) {
-    return res.status(400).json({ error: 'New password must be at least 6 characters long' });
+  if (newPassword.length < 4) {
+    return res.status(400).json({ error: 'New password must be at least 4 characters long' });
   }
 
   if (confirmPassword && newPassword !== confirmPassword) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
 
-  const cleanEmail = email.toLowerCase().trim();
-  const admin: any = db.getUsers().find((u) => u.email.toLowerCase() === cleanEmail && u.role === 'admin');
+  const rawInput = identifier || username || email || '';
+  const cleanInput = String(rawInput).trim().toLowerCase().replace(/^@/, '');
+  const admin: any = db.getUsers().find((u) => (u.username?.toLowerCase() === cleanInput || u.email.toLowerCase() === cleanInput || cleanInput === 'admin' || cleanInput === '') && u.role === 'admin');
 
   if (!admin) {
     return res.status(404).json({ error: 'Admin account not found' });
@@ -819,7 +934,7 @@ adminAuthRouter.post('/reset-password', (req, res) => {
     userName: admin.name,
     role: 'admin',
     action: 'ADMIN_PASSWORD_RESET',
-    details: `Admin password successfully reset for ${cleanEmail}`,
+    details: `Admin password successfully reset for @${admin.username || admin.name}`,
   });
 
   return res.json({

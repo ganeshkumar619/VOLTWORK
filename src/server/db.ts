@@ -268,42 +268,81 @@ class Database {
       this.save();
     }
 
-    // Ensure admin exists and has updated Mudukkumeendanpatti location details
-    const adminUser = this.data.users?.find((u) => u.role === 'admin');
-    if (!adminUser) {
-      const defaultAdmin: User & { passwordHash: string } = {
-        id: 'usr-admin-01',
-        name: 'Master Electrician & Admin',
-        email: 'admin@voltwork.ai',
-        phone: '+91 98765 43210',
-        role: 'admin',
-        address: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
-        location: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
-        village: 'Mudukkumeendanpatti',
-        taluk: 'Kovilpatti',
-        district: 'Thoothukudi',
-        state: 'Tamilnadu',
-        pincode: '628716',
-        latitude: 9.17,
-        longitude: 77.87,
-        createdAt: new Date().toISOString(),
-        status: 'active',
-        temporaryPassword: true,
-        passwordHash: hashPassword('admin123'),
-      } as any;
-      this.data.users.push(defaultAdmin);
-      this.save();
+    // Ensure initial admin, workers, and sample customers exist if empty
+    if (!this.data.users || this.data.users.length === 0) {
+      this.bootstrap();
     } else {
-      // Ensure admin's location is up to date
-      adminUser.address = 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716';
-      adminUser.location = 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716';
-      adminUser.village = 'Mudukkumeendanpatti';
-      adminUser.taluk = 'Kovilpatti';
-      adminUser.district = 'Thoothukudi';
-      adminUser.state = 'Tamilnadu';
-      adminUser.pincode = '628716';
-      adminUser.latitude = 9.17;
-      adminUser.longitude = 77.87;
+      // Ensure admin exists and has username
+      const admin = this.data.users.find((u) => u.role === 'admin');
+      if (!admin) {
+        const defaultAdmin: User & { passwordHash: string } = {
+          id: 'usr-admin-01',
+          name: 'Ganesh Kumar',
+          username: 'admin',
+          email: 'admin@voltwork.ai',
+          phone: '+91 98400 00000',
+          role: 'admin',
+          address: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
+          location: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
+          village: 'Mudukkumeendanpatti',
+          taluk: 'Kovilpatti',
+          district: 'Thoothukudi',
+          state: 'Tamilnadu',
+          pincode: '628716',
+          latitude: 9.17,
+          longitude: 77.87,
+          createdAt: new Date().toISOString(),
+          status: 'active',
+          avatarUrl: 'https://api.dicebear.com/7.x/personas/svg?seed=Ganesh',
+          passwordHash: hashPassword('admin123'),
+        } as any;
+        this.data.users.push(defaultAdmin);
+        this.save();
+      } else {
+        if (!admin.username) {
+          admin.username = 'admin';
+          this.save();
+        }
+      }
+
+      // Backfill usernames for workers and customers if missing
+      let modified = false;
+      this.data.users.forEach((u) => {
+        if (!u.username) {
+          if (u.role === 'admin') u.username = 'admin';
+          else if (u.role === 'worker') {
+            const raw = (u.name || 'worker').toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').slice(0, 20);
+            u.username = `${raw}_tech`;
+          } else {
+            const raw = (u.name || 'user').toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').slice(0, 20);
+            u.username = `${raw}_${u.id.slice(-4)}`;
+          }
+          modified = true;
+        }
+      });
+
+      // Synchronize worker profiles with usernames
+      this.data.workers.forEach((w) => {
+        const u = this.data.users.find((usr) => usr.id === w.userId);
+        if (u && u.username) {
+          w.username = u.username;
+          w.workerHandle = `@${u.username}`;
+          modified = true;
+        }
+      });
+
+      // Synchronize customer profiles with usernames
+      this.data.customers.forEach((c) => {
+        const u = this.data.users.find((usr) => usr.id === c.userId);
+        if (u && u.username) {
+          c.username = u.username;
+          modified = true;
+        }
+      });
+
+      if (modified) {
+        this.save();
+      }
     }
 
     // Ensure companySettings exists
@@ -321,11 +360,14 @@ class Database {
   }
 
   private bootstrap() {
+    const now = new Date().toISOString();
+
     const defaultAdmin: User & { passwordHash: string } = {
       id: 'usr-admin-01',
-      name: 'Master Electrician & Admin',
+      name: 'Ganesh Kumar',
+      username: 'admin',
       email: 'admin@voltwork.ai',
-      phone: '+91 98765 43210',
+      phone: '+91 98400 00000',
       role: 'admin',
       address: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
       location: 'Mudukkumeendanpatti, Kovilpatti, Thoothukudi, Tamilnadu - 628716',
@@ -336,24 +378,220 @@ class Database {
       pincode: '628716',
       latitude: 9.17,
       longitude: 77.87,
-      createdAt: new Date().toISOString(),
+      createdAt: now,
       status: 'active',
-      temporaryPassword: true,
+      avatarUrl: 'https://api.dicebear.com/7.x/personas/svg?seed=Ganesh',
       passwordHash: hashPassword('admin123'),
     } as any;
 
+    const workerUser1: User & { passwordHash: string } = {
+      id: 'usr-worker-01',
+      name: 'Murugan Electrician',
+      username: 'murugan_tech',
+      email: 'murugan@voltwork.ai',
+      phone: '+91 98421 11223',
+      role: 'worker',
+      address: 'Kovilpatti Main Road, Thoothukudi - 628501',
+      location: 'Kovilpatti, Thoothukudi - 628501',
+      village: 'Kovilpatti',
+      taluk: 'Kovilpatti',
+      district: 'Thoothukudi',
+      state: 'Tamilnadu',
+      pincode: '628501',
+      latitude: 9.172,
+      longitude: 77.868,
+      createdAt: now,
+      status: 'active',
+      avatarUrl: 'https://api.dicebear.com/7.x/personas/svg?seed=Murugan',
+      passwordHash: hashPassword('worker123'),
+    } as any;
+
+    const workerUser2: User & { passwordHash: string } = {
+      id: 'usr-worker-02',
+      name: 'Karthik R',
+      username: 'karthik_volt',
+      email: 'karthik@voltwork.ai',
+      phone: '+91 98422 22334',
+      role: 'worker',
+      address: 'Kayathar Bus Stand Road, Thoothukudi - 628720',
+      location: 'Kayathar, Thoothukudi - 628720',
+      village: 'Kayathar',
+      taluk: 'Kovilpatti',
+      district: 'Thoothukudi',
+      state: 'Tamilnadu',
+      pincode: '628720',
+      latitude: 9.045,
+      longitude: 77.785,
+      createdAt: now,
+      status: 'active',
+      avatarUrl: 'https://api.dicebear.com/7.x/personas/svg?seed=Karthik',
+      passwordHash: hashPassword('worker123'),
+    } as any;
+
+    const customerUser1: User & { passwordHash: string } = {
+      id: 'usr-cust-01',
+      name: 'Ravi Kumar',
+      username: 'ravi_k',
+      email: 'ravi_k@voltwork.user',
+      phone: '+91 98401 23456',
+      role: 'customer',
+      address: '14, Gandhi Nagar, Kovilpatti, Thoothukudi - 628502',
+      location: 'Gandhi Nagar, Kovilpatti - 628502',
+      doorNo: '14',
+      street: 'Gandhi Nagar 2nd Street',
+      area: 'Kovilpatti',
+      city: 'Kovilpatti',
+      district: 'Thoothukudi',
+      state: 'Tamilnadu',
+      pincode: '628502',
+      latitude: 9.175,
+      longitude: 77.875,
+      createdAt: now,
+      status: 'active',
+      avatarUrl: 'https://api.dicebear.com/7.x/bottts/svg?seed=Ravi',
+      passwordHash: hashPassword('customer123'),
+    } as any;
+
+    const workerProfile1: WorkerProfile = {
+      id: 'wrk-01',
+      userId: 'usr-worker-01',
+      name: 'Murugan Electrician',
+      email: 'murugan@voltwork.ai',
+      phone: '+91 98421 11223',
+      skills: ['Wiring', 'Fan Repair', 'MCB / DB', 'Emergency'],
+      experienceYears: 8,
+      address: 'Kovilpatti Main Road, Thoothukudi - 628501',
+      currentLat: 9.172,
+      currentLng: 77.868,
+      isLocationSharing: true,
+      availability: 'available',
+      joiningDate: '2024-01-15',
+      employmentType: 'full_time',
+      salaryType: 'monthly',
+      basicSalary: 22000,
+      commissionRate: 10,
+      status: 'active',
+      completedJobsCount: 42,
+      rating: 4.9,
+    };
+
+    const workerProfile2: WorkerProfile = {
+      id: 'wrk-02',
+      userId: 'usr-worker-02',
+      name: 'Karthik R',
+      email: 'karthik@voltwork.ai',
+      phone: '+91 98422 22334',
+      skills: ['Inverter', 'Motors', 'Pump', 'Appliances'],
+      experienceYears: 5,
+      address: 'Kayathar Bus Stand Road, Thoothukudi - 628720',
+      currentLat: 9.045,
+      currentLng: 77.785,
+      isLocationSharing: true,
+      availability: 'available',
+      joiningDate: '2024-06-01',
+      employmentType: 'full_time',
+      salaryType: 'monthly',
+      basicSalary: 18000,
+      commissionRate: 10,
+      status: 'active',
+      completedJobsCount: 28,
+      rating: 4.8,
+    };
+
+    const customerProfile1: CustomerProfile = {
+      id: 'cust-01',
+      userId: 'usr-cust-01',
+      name: 'Ravi Kumar',
+      email: 'customer@email.com',
+      phone: '+91 98401 23456',
+      address: '14, Gandhi Nagar, Kovilpatti, Thoothukudi - 628502',
+      doorNo: '14',
+      street: 'Gandhi Nagar 2nd Street',
+      area: 'Kovilpatti',
+      city: 'Kovilpatti',
+      district: 'Thoothukudi',
+      state: 'Tamilnadu',
+      pincode: '628502',
+      latitude: 9.175,
+      longitude: 77.875,
+      createdAt: now,
+      totalJobs: 1,
+      totalSpent: 1200,
+      status: 'active',
+    };
+
+    const sampleJob: Job = {
+      id: 'JOB-1001',
+      customerId: 'cust-01',
+      customerName: 'Ravi Kumar',
+      customerPhone: '+91 98401 23456',
+      customerEmail: 'customer@email.com',
+      address: '14, Gandhi Nagar, Kovilpatti, Thoothukudi - 628502',
+      doorNo: '14',
+      street: 'Gandhi Nagar 2nd Street',
+      area: 'Kovilpatti',
+      city: 'Kovilpatti',
+      district: 'Thoothukudi',
+      state: 'Tamilnadu',
+      pincode: '628502',
+      latitude: 9.175,
+      longitude: 77.875,
+      description: 'Main hall ceiling fan not rotating, humming noise observed.',
+      category: 'Fan Repair',
+      priority: 'medium',
+      status: 'ASSIGNED',
+      assignedWorkerId: 'wrk-01',
+      assignedWorkerName: 'Murugan Electrician',
+      assignedWorkerPhone: '+91 98421 11223',
+      paymentStatus: 'pending',
+      suggestedTotal: 350,
+      createdAt: now,
+      updatedAt: now,
+    };
+
     this.data = {
-      users: [defaultAdmin],
-      customers: [],
-      workers: [],
+      users: [defaultAdmin, workerUser1, workerUser2, customerUser1],
+      customers: [customerProfile1],
+      workers: [workerProfile1, workerProfile2],
       serviceCategories: [...DEFAULT_CATEGORIES],
-      jobs: [],
+      jobs: [sampleJob],
       jobMaterials: [],
-      jobStatusHistory: [],
+      jobStatusHistory: [
+        {
+          id: 'hist-01',
+          jobId: 'JOB-1001',
+          status: 'REQUESTED',
+          notes: 'Customer created new job request',
+          updatedByUserId: 'usr-cust-01',
+          updatedByName: 'Ravi Kumar',
+          role: 'customer',
+          timestamp: now,
+        },
+        {
+          id: 'hist-02',
+          jobId: 'JOB-1001',
+          status: 'ASSIGNED',
+          notes: 'Assigned to Murugan Electrician',
+          updatedByUserId: 'usr-admin-01',
+          updatedByName: 'Ganesh Kumar',
+          role: 'admin',
+          timestamp: now,
+        },
+      ],
       invoices: [],
       payments: [],
       salaryRecords: [],
-      attendance: [],
+      attendance: [
+        {
+          id: 'att-01',
+          workerId: 'wrk-01',
+          workerName: 'Murugan Electrician',
+          date: new Date().toISOString().split('T')[0],
+          status: 'present',
+          checkIn: '08:30:00',
+          notes: 'Kovilpatti HQ',
+        },
+      ],
       notifications: [],
       smsLogs: [],
       auditLogs: [],

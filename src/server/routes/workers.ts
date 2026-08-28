@@ -168,6 +168,7 @@ workerRouter.post('/', authMiddleware, requireRole('admin'), (req: any, res) => 
   try {
     const {
       name,
+      username,
       phone,
       email,
       password,
@@ -180,14 +181,33 @@ workerRouter.post('/', authMiddleware, requireRole('admin'), (req: any, res) => 
       commissionRate,
     } = req.body;
 
-    if (!name || !phone || !email || !password) {
-      return res.status(400).json({ error: 'Name, phone, email, and initial password are required' });
+    if (!name || !phone || !password) {
+      return res.status(400).json({ error: 'Name, mobile number, and login password are required' });
     }
 
     const users = db.getUsers();
-    const existing = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-    if (existing) {
-      return res.status(400).json({ error: 'Email already in use' });
+    
+    // Generate clean username / Instagram-like handle
+    let cleanUsername = (username || '').trim().toLowerCase().replace(/^@/, '').replace(/[^a-z0-9_.]/g, '_');
+    if (!cleanUsername || cleanUsername.length < 3) {
+      const baseName = name.trim().toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').slice(0, 15);
+      cleanUsername = `${baseName}_tech`;
+    }
+
+    // Ensure unique username
+    let finalUsername = cleanUsername;
+    let counter = 1;
+    while (users.some((u) => u.username?.toLowerCase() === finalUsername)) {
+      finalUsername = `${cleanUsername}_${counter}`;
+      counter++;
+    }
+
+    const cleanEmail = (email && email.trim()) ? email.trim().toLowerCase() : `${finalUsername}@voltwork.ai`;
+    const cleanPhone = phone.trim();
+
+    const existingPhone = users.find((u) => u.phone && u.phone.replace(/\D/g, '').endsWith(cleanPhone.replace(/\D/g, '')));
+    if (existingPhone) {
+      return res.status(400).json({ error: `Phone number is already assigned to ${existingPhone.name} (${existingPhone.username || existingPhone.role})` });
     }
 
     const userId = `usr-work-${Date.now()}`;
@@ -196,11 +216,12 @@ workerRouter.post('/', authMiddleware, requireRole('admin'), (req: any, res) => 
 
     const newUser: any = {
       id: userId,
-      name,
-      email: email.toLowerCase(),
-      phone,
+      name: name.trim(),
+      username: finalUsername,
+      email: cleanEmail,
+      phone: cleanPhone,
       role: 'worker',
-      avatarUrl: `https://api.dicebear.com/7.x/personas/svg?seed=${encodeURIComponent(name)}`,
+      avatarUrl: `https://api.dicebear.com/7.x/personas/svg?seed=${encodeURIComponent(name.trim())}`,
       createdAt: now,
       status: 'active',
       passwordHash: hashPassword(password),
@@ -209,13 +230,15 @@ workerRouter.post('/', authMiddleware, requireRole('admin'), (req: any, res) => 
     const newWorker: WorkerProfile = {
       id: workerId,
       userId,
-      name,
-      phone,
-      email: email.toLowerCase(),
+      name: name.trim(),
+      username: finalUsername,
+      workerHandle: `@${finalUsername}`,
+      phone: cleanPhone,
+      email: cleanEmail,
       avatarUrl: newUser.avatarUrl,
-      skills: Array.isArray(skills) ? skills : skills ? [skills] : ['General'],
+      skills: Array.isArray(skills) ? skills : skills ? [skills] : ['Wiring', 'General Electrical'],
       experienceYears: Number(experienceYears) || 1,
-      address: address || '',
+      address: address || 'Kovilpatti, Thoothukudi',
       availability: 'available',
       isLocationSharing: false,
       joiningDate: now.split('T')[0],
@@ -237,17 +260,24 @@ workerRouter.post('/', authMiddleware, requireRole('admin'), (req: any, res) => 
       userName: req.user.name,
       role: 'admin',
       action: 'WORKER_CREATED',
-      details: `Admin added electrician/worker ${name} (${email})`,
+      details: `Admin added electrician/worker ${name} with Handle: @${finalUsername} | Phone: ${cleanPhone}`,
     });
 
     db.addNotification({
       recipientRole: 'admin',
       title: 'New Electrician Added',
-      message: `${name} has been enrolled as a field technician.`,
+      message: `${name} (@${finalUsername}) has been registered as a field technician.`,
       type: 'salary_updated',
     });
 
-    return res.status(201).json(newWorker);
+    return res.status(201).json({
+      ...newWorker,
+      credentials: {
+        username: finalUsername,
+        workerHandle: `@${finalUsername}`,
+        password,
+      },
+    });
   } catch (error) {
     console.error('Create worker error:', error);
     return res.status(500).json({ error: 'Failed to create worker' });

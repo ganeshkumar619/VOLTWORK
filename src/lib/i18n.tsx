@@ -776,6 +776,132 @@ const directPhraseMap: Record<string, string> = {
   'Submit Request': 'கோரிக்கையை சமர்ப்பிக்கவும்',
   'Request Submitted': 'கோரிக்கை சமர்ப்பிக்கப்பட்டது',
 
+  // Customer Dashboard & Job Creation
+  'VoltWork AI Rapid Dispatch': 'VoltWork AI உடனடி அனுப்புதல்',
+  'VoltWork Customer Portal': 'VoltWork வாடிக்கையாளர் தளம்',
+  'Welcome,': 'வரவேற்கிறோம்,',
+  Welcome: 'வரவேற்கிறோம்',
+  'Certified electricians on demand, AI diagnostic safety analysis, and live GPS dispatch':
+    'தேவையின் பேரில் சான்றளிக்கப்பட்ட எலக்ட்ரீஷியன்கள், AI பாதுகாப்பு பகுப்பாய்வு & நேரடி GPS அனுப்புதல்',
+  'Provide problem details to get real-time AI safety analysis & certified electrician assignment':
+    'நிகழ்நேர AI பாதுகாப்பு பகுப்பாய்வு மற்றும் சான்றளிக்கப்பட்ட எலக்ட்ரீஷியன் ஒதுக்கீட்டைப் பெற பிரச்சனையின் விவரங்களை வழங்கவும்',
+  '1. Service Category & Urgency': '1. சேவை வகை & அவசரம்',
+  'Service Category & Urgency': '1. சேவை வகை & அவசரம்',
+  'Electrical Category': 'மின்சார சேவை வகை',
+  'Electrical Category *': 'மின்சார சேவை வகை *',
+  'Priority Level': 'முன்னுரிமை நிலை',
+  'Priority Level *': 'முன்னுரிமை நிலை *',
+  'Low Priority (Routine check / installation)': 'குறைந்த முன்னுரிமை (வழக்கமான சோதனை / பொருத்துதல்)',
+  'Medium Priority (Standard repair)': 'நடுத்தர முன்னுரிமை (நிலையான பழுது)',
+  'High Priority (Main appliance down / no power in room)': 'உயர் முன்னுரிமை (முக்கிய சாதனம் பழுது / அறையில் மின்சாரம் இல்லை)',
+  'Emergency (Sparking / Burning Smell / Shock Risk)': 'அவசரம் ⚡ (தீப்பொறி / எரியும் வாசனை / அதிர்ச்சி ஆபத்து)',
+  '2. Problem Description & AI Technical Analysis': '2. பிரச்சனை விளக்கம் & AI தொழில்நுட்ப பகுப்பாய்வு',
+  'Problem Description & AI Technical Analysis': '2. பிரச்சனை விளக்கம் & AI தொழில்நுட்ப பகுப்பாய்வு',
+  'Run AI Problem Analysis': 'AI பகுப்பாய்வு செய்யவும்',
+  'Run AI Diagnostic (Gemini 3.7)': 'AI பகுப்பாய்வு செய்யவும் (Gemini 3.7)',
+  'Describe the issue clearly. E.g. Master bedroom ceiling fan running very slowly with humming sound, or MCB tripping immediately whenever the AC is turned on...':
+    'பிரச்சனையை தெளிவாக விவரிக்கவும். எ.கா: படுக்கையறை மின்விசிறி மிக மெதுவாக சுழல்கிறது, அல்லது ஏசி போட்டவுடன் MCB ட்ரிப் ஆகிறது...',
+  'Describe the issue clearly...': 'பிரச்சனையை தெளிவாக விவரிக்கவும்...',
+  '3. Service Location & Schedule': '3. சேவை இருப்பிடம் & திட்டமிடல்',
+  'Service Location & Schedule': '3. சேவை இருப்பிடம் & திட்டமிடல்',
+  'Auto-Detect Live Location': 'GPS இருப்பிடத்தை பிடிக்கவும்',
+  'Capture GPS Location': 'GPS இருப்பிடத்தை பிடிக்கவும்',
+  'Acquiring GPS...': 'GPS இருப்பிடம் பெறப்படுகிறது...',
+  'Detecting GPS...': 'GPS கண்டறியப்படுகிறது...',
+  'Locating your GPS coordinates...': 'உங்கள் GPS ஆயத்தொலைவுகள் கண்டறியப்படுகின்றன...',
+  'Quick Fill': 'விரைவு நிரப்பு',
+  'Quick Fill:': 'விரைவு நிரப்பு:',
+  'Mudukkumeendanpatti HQ (628716)': 'முடுக்குமீண்டான்பட்டி HQ (628716)',
+  'Kovilpatti Town (628501)': 'கோவில்பட்டி நகரம் (628501)',
+  'Property Service Address': 'சேவை முகவரி',
+  'Door No, Street Name, Landmark...': 'கதவு எண், தெரு பெயர், அடையாளம்...',
+  'Door No, Street Name, Landmark (e.g. Main Road, Mudukkumeendanpatti, Kovilpatti)':
+    'கதவு எண், தெரு பெயர், அடையாளம் (எ.கா: மெயின் ரோடு, முடுக்குமீண்டான்பட்டி, கோவில்பட்டி)',
+  'Preferred Date': 'விரும்பிய தேதி',
+  'Preferred Time Slot': 'விரும்பிய நேரம்',
+  'Immediate Emergency (Next available tech)': 'உடனடி அவசரம் ⚡ (அடுத்த கிடைக்கும் தொழிலாளி)',
+  '4. Photos of Fault / Switchboard (Optional)': '4. பழுது / சுவிட்ச்போர்டு புகைப்படங்கள் (விருப்பமானது)',
+  'Fault Photos': 'பழுது புகைப்படங்கள்',
+  'Helps the technician bring the right spare parts': 'தொழிலாளி சரியான உதிரி பாகங்களை கொண்டு வர உதவுகிறது',
+  'Helps technician bring right spare parts': 'தொழிலாளி சரியான உதிரி பாகங்களை கொண்டு வர உதவுகிறது',
+  'Attach Photo': 'புகைப்படம் இணைக்கவும்',
+  '+ Attach Photo': '+ புகைப்படம் இணைக்கவும்',
+  'Upload Photos': 'புகைப்படங்களை பதிவேற்றவும்',
+  'Service Property Address': 'சேவை சொத்து முகவரி',
+  'GPS Captured ✓': 'GPS பிடிக்கப்பட்டது ✓',
+  'Coordinates:': 'ஆயத்தொலைவுகள்:',
+  'Update Address & GPS': 'முகவரி & GPS புதுப்பிக்கவும்',
+  'Active Requests': 'செயலில் உள்ள கோரிக்கைகள்',
+  'In dispatch or in-service': 'ஒதுக்கீட்டில் அல்லது வேலையில் உள்ளது',
+  'Past Completed Repairs': 'கடந்த காலத்தில் முடிந்த பழுதுகள்',
+  'Fully verified and closed': 'முழுமையாக சரிபார்க்கப்பட்டு மூடப்பட்டது',
+  'Total Spent': 'மொத்த செலவு',
+  'All registered jobs': 'அனைத்து பதிவு செய்யப்பட்ட வேலைகள்',
+  'Active Service Requests': 'செயலில் உள்ள சேவை கோரிக்கைகள்',
+  'No Jobs Yet': 'இன்னும் வேலைகள் இல்லை',
+  'You have no active electrical service requests right now.': 'தற்போது உங்களிடம் செயலில் உள்ள மின்சார சேவை கோரிக்கைகள் எதுவும் இல்லை.',
+  'Book a Service Now': 'இப்போதே சேவை முன்பதிவு செய்யவும்',
+  'Assigning certified technician...': 'சான்றளிக்கப்பட்ட எலக்ட்ரீஷியன் நியமிக்கப்படுகிறார்...',
+  'Approved Bill': 'ஒப்புதல் அளிக்கப்பட்ட கட்டணம்',
+  'Completed Service History': 'முடிந்த சேவை வரலாறு',
+  'View Full History': 'முழு வரலாற்றையும் பார்க்கவும்',
+  'Amount Paid': 'செலுத்தப்பட்ட தொகை',
+  'Permanent digital record of all past electrical maintenance, technician notes, and invoices':
+    'அனைத்து கடந்த கால மின் பராமரிப்பு, தொழில்நுட்ப குறிப்புகள் மற்றும் விலைப்பட்டியல்களின் நிரந்தர டிஜிட்டல் பதிவு',
+  'Search Jobs...': 'வேலைகளை தேடவும்...',
+  'Search Jobs': 'வேலைகளை தேடவும்',
+  'No completed service records found.': 'முடிந்த சேவை பதிவுகள் எதுவும் இல்லை.',
+  'VoltWork AI Technical Analysis': 'VoltWork AI தொழில்நுட்ப பகுப்பாய்வு',
+  'Automated electrical diagnostic & workforce recommendation': 'தானியங்கி மின்சார நோயறிதல் & தொழிலாளர் பரிந்துரை',
+  Match: 'பொருத்தம்',
+  'AI Analysis': 'AI பகுப்பாய்வு',
+  'AI Technical Analysis': 'AI தொழில்நுட்ப பகுப்பாய்வு',
+  Complexity: 'சிக்கலானது',
+  Moderate: 'மிதமான',
+  Simple: 'எளிய',
+  Complex: 'சிக்கலான',
+  'Safety Notice:': 'பாதுகாப்பு அறிவிப்பு:',
+  'Identified Issue:': 'கண்டறியப்பட்ட பிரச்சனை:',
+  'Detected Category': 'கண்டறியப்பட்ட வகை',
+  'Recommended Skill Level:': 'பரிந்துரைக்கப்பட்ட திறன் நிலை:',
+  Junior: 'தொடக்க நிலை',
+  'Mid-level': 'நடுத்தர நிலை',
+  Expert: 'நிபுணர்',
+  'Reference Cost Range:': 'மதிப்பிடப்பட்ட விலை வரம்பு:',
+  'Required Materials:': 'தேவையான உதிரி பாகங்கள்:',
+  'Safety Precaution Checklist:': 'பாதுகாப்பு முன்னெச்சரிக்கை பட்டியல்:',
+  'Total Bill Amount': 'மொத்த கட்டண தொகை',
+  'Admin Reviewing Bill': 'நிர்வாகம் கட்டணத்தை சரிபார்க்கிறது',
+  'Verified Rating': 'சரிபார்க்கப்பட்ட மதிப்பீடு',
+  'Contact Number:': 'தொடர்பு எண்:',
+  'Experience:': 'அனுபவம்:',
+  'Years Certified': 'ஆண்டுகள் சான்றிதழ்',
+  'Dispatch in Progress': 'அனுப்பீடு செயல்பாட்டில் உள்ளது',
+  'Admin is matching the best nearby electrician.': 'நிர்வாகி சிறந்த அருகிலுள்ள எலக்ட்ரீஷியனை ஒதுக்குகிறார்.',
+  'Fault Description': 'பிரச்சனை விளக்கம்',
+  'Service Site Location & Address': 'சேவை தள இருப்பிடம் & முகவரி',
+  'Customer Premise Address:': 'வாடிக்கையாளர் வளாக முகவரி:',
+  'Verified Bill Breakdown': 'சரிபார்க்கப்பட்ட கட்டண விவரம்',
+  'Payment Due': 'கட்டணம் செலுத்த வேண்டும்',
+  'Labour Charges:': 'தொழிலாளர் கூலி:',
+  'Materials / Spare Parts:': 'பொருட்கள் / உதிரி பாகங்கள்:',
+  'Total Verified Bill:': 'மொத்த சரிபார்க்கப்பட்ட கட்டணம்:',
+  'Digital Receipt / Bill': 'டிஜிட்டல் ரசீது / பில்',
+  'Pay Bill': 'கட்டணம் செலுத்தவும்',
+  'Payment Confirmed!': 'பணம் பெறப்பட்டது!',
+  'Back to My Requests': 'எனது கோரிக்கைகளுக்குத் திரும்பு',
+  'Manage your service property address, live GPS location coordinates, and contact details':
+    'உங்கள் சேவை முகவரி, நேரலை GPS இருப்பிடம் மற்றும் தொடர்பு விவரங்களை நிர்வகிக்கவும்',
+  'Account Details': 'கணக்கு விவரங்கள்',
+  'Account Credentials & Verification': 'கணக்கு விவரங்கள் & சரிபார்ப்பு',
+  'Service Area & GPS Location': 'சேவை பகுதி & GPS இருப்பிடம்',
+  'Door No / Street': 'கதவு/பிளாட் எண்',
+  City: 'நகரம்/பட்டணம்',
+  'Pin Code': 'அஞ்சல் குறியீட்டு எண்',
+  Pincode: 'அஞ்சல் குறியீட்டு எண்',
+  'Registered Address': 'பதிவு செய்யப்பட்ட முகவரி',
+  'No address set': 'முகவரி அமைக்கப்படவில்லை',
+
   // Worker Portal
   'Worker Dashboard': 'தொழிலாளி கட்டுப்பாட்டு அறை',
   Accept: 'ஏற்கவும்',
@@ -873,10 +999,8 @@ const directPhraseMap: Record<string, string> = {
   'Profile updated successfully': 'சுயவிவரம் புதுப்பிக்கப்பட்டது',
 
   // Timeline Stage Translations
-  'Request Submitted': 'கோரிக்கை சமர்ப்பிக்கப்பட்டது',
   REQUESTED: 'கோரிக்கை சமர்ப்பிக்கப்பட்டது',
   'Electrician Assigned': 'தொழிலாளி நியமிக்கப்பட்டார்',
-  ASSIGNED: 'தொழிலாளி நியமிக்கப்பட்டார்',
   'Work In Progress': 'வேலை செயலில் உள்ளது',
   'Work Done - In Review': 'வேலை முடிந்தது - சரிபார்ப்பில்',
   'Admin Approved Bill': 'நிர்வாகம் கட்டணத்தை ஒப்புதல் செய்தது',
@@ -889,7 +1013,6 @@ const directPhraseMap: Record<string, string> = {
   'Preferred Schedule': 'திட்டமிடப்பட்ட நேரம்',
 
   // Worker Dashboard & Execution
-  'Assigned Jobs': 'ஒதுக்கப்பட்ட வேலைகள்',
   'Assigned jobs': 'ஒதுக்கப்பட்ட வேலைகள்',
   'Active Work Orders': 'ஒதுக்கப்பட்ட வேலைகள்',
   'Active Field Tasks': 'செயலில் உள்ள வேலைகள்',
@@ -898,7 +1021,6 @@ const directPhraseMap: Record<string, string> = {
   'No active jobs in your queue. Admin will assign new requests shortly.': 'ஒதுக்கப்பட்ட வேலைகள் இல்லை. விரைவில் புதிய வேலைகள் ஒதுக்கப்படும்.',
   'Customer Phone': 'வாடிக்கையாளர் தொலைபேசி',
   'Customer Address': 'வாடிக்கையாளர் முகவரி',
-  'Problem Description': 'பிரச்சனை விளக்கம்',
   'Work Completed': 'வேலை முடிந்தது',
   'Work completed': 'வேலை முடிந்தது',
   'Waiting for Admin Verification': 'நிர்வாக சரிபார்ப்புக்காக காத்திருக்கிறது',
@@ -934,13 +1056,6 @@ const directPhraseMap: Record<string, string> = {
   'Total Materials + Labour:': 'மொத்த பொருட்கள் + கூலி:',
   'Admin will review before generating invoice and customer SMS.': 'விலைப்பட்டியல் மற்றும் SMS அனுப்புவதற்கு முன் நிர்வாகி சரிபார்ப்பார்.',
   'Submit to Admin for Verification': 'சரிபார்ப்புக்கு சமர்ப்பிக்கவும்',
-  'Submit for Verification': 'சரிபார்ப்புக்கு சமர்ப்பிக்கவும்',
-  'Accept': 'ஏற்கவும்',
-  'Reject': 'நிராகரிக்கவும்',
-  'On The Way': 'வழியில்',
-  'Reached Site': 'வந்து சேர்ந்தார்',
-  'Start Work': 'வேலையை தொடங்கவும்',
-  'Complete Work': 'வேலையை முடிக்கவும்',
   'Navigate': 'வழிசெல்லவும்',
   'Start Travel (On The Way)': 'வழியில்',
   'Reached Customer Site': 'வந்து சேர்ந்தார்',
@@ -948,12 +1063,9 @@ const directPhraseMap: Record<string, string> = {
   'Accept Job': 'ஏற்கவும்',
 
   // Attendance in Worker Dashboard
-  'Attendance': 'வருகை பதிவு',
   'attendance': 'வருகை பதிவு',
   'My Attendance & Duty Hours': 'வருகை பதிவு & வேலை நேரம்',
   'Daily logs of your work check-ins, check-outs, and calculated field hours': 'தினசரி வருகை, வெளியேறு பதிவு மற்றும் கணக்கிடப்பட்ட வேலை நேரம்',
-  'Check-In': 'வருகை பதிவு',
-  'Check-Out': 'வெளியேறு பதிவு',
   'check-in': 'வருகை பதிவு',
   'check-out': 'வெளியேறு பதிவு',
   'Check-In Time': 'வருகை நேரம்',
@@ -963,19 +1075,14 @@ const directPhraseMap: Record<string, string> = {
   'No attendance history logged yet.': 'வருகை பதிவுகள் இல்லை',
   'Today\'s Attendance': 'இன்றைய வருகை',
   'Month Summary': 'மாத சுருக்கம்',
-  'Present': 'ஆஜர்',
   'present': 'ஆஜர்',
-  'Absent': 'வராதவர்',
   'absent': 'வராதவர்',
-  'Leave': 'விடுமுறை',
   'leave': 'விடுமுறை',
-  'Half Day': 'அரை நாள்',
   'half_day': 'அரை நாள்',
   'In Progress': 'செயலில் உள்ளது',
   'Mark Attendance': 'வருகையை பதிவு செய்யவும்',
 
   // Salary in Worker Dashboard
-  'My Salary': 'எனது சம்பளம்',
   'My Salary Statements & Payouts': 'எனது சம்பளம்',
   'Detailed monthly compensation breakdown: Basic pay + job commissions + bonuses': 'மாதாந்திர வருவாய் விவரங்கள்: அடிப்படை சம்பளம் + கமிஷன் + போனஸ்',
   'Total Received Earnings': 'மொத்தம் செலுத்தப்பட்டது',
@@ -990,17 +1097,13 @@ const directPhraseMap: Record<string, string> = {
   'Total Net': 'மொத்த சம்பளம்',
   'Paid': 'செலுத்தப்பட்டது ✓',
   'paid': 'செலுத்தப்பட்டது ✓',
-  'Pending': 'நிலுவையில்',
   'pending': 'நிலுவையில்',
   'Partial': 'பகுதி செலுத்தப்பட்டது',
   'partial': 'பகுதி செலுத்தப்பட்டது',
 
   // Profile in Worker Dashboard
-  'My Profile': 'எனது சுயவிவரம்',
-  'Email Address': 'மின்னஞ்சல் முகவரி',
   'Joining Date': 'இணைந்த தேதி',
   'Profile Photo': 'சுயவிவர புகைப்படம்',
-  'Upload Photo': 'புகைப்படம் பதிவேற்றவும்',
   'Certified Field Technician': 'சான்றளிக்கப்பட்ட எலக்ட்ரீஷியன்',
   'Member Since:': 'இணைந்த தேதி:',
   'Member Since': 'இணைந்த தேதி',
@@ -1175,7 +1278,6 @@ const directPhraseMap: Record<string, string> = {
   'Real-time daily check-in, check-out, working hours calculation, and GPS stamps': 'நிகழ்நேர தினசரி வருகை, வெளியேறு பதிவு, வேலை நேரக் கணக்கீடு மற்றும் GPS முத்திரைகள்',
   'Total Working Hours': 'மொத்த வேலை நேரம்',
   'Record / Adjust Attendance': 'வருகையை பதிவு செய்யவும்',
-  'Mark Attendance': 'வருகையை பதிவு செய்யவும்',
 
   // Service Categories Page
   'Electrical Service Categories': 'சேவை வகைகள்',
@@ -1239,7 +1341,6 @@ const directPhraseMap: Record<string, string> = {
   'Customer Details': 'வாடிக்கையாளர் விவரங்கள்',
   'AI ANALYSIS': 'AI பகுப்பாய்வு',
   'AI ANALYZING': 'AI பகுப்பாய்வு',
-  ASSIGNED: 'நியமிக்கப்பட்டது',
   ACCEPTED: 'ஏற்றுக்கொள்ளப்பட்டது',
   'ON THE WAY': 'வழியில்',
   REACHED: 'வந்து சேர்ந்தார்',
@@ -1291,7 +1392,6 @@ const directPhraseMap: Record<string, string> = {
   Print: 'அச்சிடுக',
   'Save Changes': 'மாற்றங்களை சேமிக்கவும்',
   'View Invoice': 'விலைப்பட்டியலைப் பார்க்கவும்',
-  'Run AI Problem Analysis': 'AI பகுப்பாய்வு',
   'AI Analyze': 'AI பகுப்பாய்வு',
 
   // Messages & Alerts
@@ -1301,7 +1401,6 @@ const directPhraseMap: Record<string, string> = {
   'Loading...': 'ஏற்றப்படுகிறது...',
   Loading: 'ஏற்றப்படுகிறது...',
   'No Data': 'தரவு இல்லை',
-  'No Jobs Yet': 'இன்னும் வேலைகள் இல்லை',
   'No Customers Yet': 'இன்னும் வாடிக்கையாளர்கள் இல்லை',
   'No Workers Yet': 'இன்னும் தொழிலாளர்கள் இல்லை',
   'No Completed Jobs': 'முடிந்த வேலைகள் இல்லை',
@@ -1318,20 +1417,14 @@ const directPhraseMap: Record<string, string> = {
   'Confirm Password': 'கடவுச்சொல்லை உறுதி செய்யவும்',
   Address: 'முகவரி',
   'Door/Flat No': 'கதவு/பிளாட் எண்',
-  'Door No / Street': 'கதவு/பிளாட் எண்',
   'Street/Road': 'தெரு/சாலை',
   'Area/Village': 'பகுதி/கிராமம்',
   'City/Town': 'நகரம்/பட்டணம்',
-  City: 'நகரம்/பட்டணம்',
   District: 'மாவட்டம்',
   'PIN Code': 'அஞ்சல் குறியீட்டு எண்',
-  'Pin Code': 'அஞ்சல் குறியீட்டு எண்',
-  'Pincode': 'அஞ்சல் குறியீட்டு எண்',
 
   // GPS & Location
-  'Capture GPS Location': 'GPS இருப்பிடத்தை பிடிக்கவும்',
   'GPS Captured': 'GPS பிடிக்கப்பட்டது ✓',
-  'GPS Captured ✓': 'GPS பிடிக்கப்பட்டது ✓',
   Latitude: 'அட்சரேகை',
   Longitude: 'தீர்க்கரேகை',
   'Location Permission Denied': 'இருப்பிட அனுமதி மறுக்கப்பட்டது',
@@ -1357,7 +1450,7 @@ const directPhraseMap: Record<string, string> = {
   'Payment Date': 'செலுத்திய தேதி',
 
   // Attendance
-  'Working Hours': 'வேலை நேரம்',
+  'Mark Attendance Record': 'வருகையை பதிவு செய்யவும்',
 
   // Search & Filters
   'Filter by Date': 'தேதியின் படி வடிகட்டு',
@@ -1380,7 +1473,7 @@ const directPhraseMap: Record<string, string> = {
   'Worker On The Way': 'தொழிலாளி வழியில்',
   'Worker Reached': 'தொழிலாளி வந்து சேர்ந்தார்',
   'Work Started': 'வேலை தொடங்கியது',
-  'Work Completed': 'வேலை முடிந்தது',
+  'Job Work Completed': 'வேலை முடிந்தது',
   'Bill Approved': 'கட்டணம் அங்கீகரிக்கப்பட்டது',
   'Payment Received': 'பணம் பெறப்பட்டது',
 
@@ -1417,6 +1510,56 @@ const directPhraseMap: Record<string, string> = {
   'Network error': 'பிணைய பிழை',
   'Please check your internet connection': 'உங்கள் இணைய இணைப்பை சரிபார்க்கவும்',
 
+  // Registration & Email Validation
+  'Original Email Address': 'அசல் மின்னஞ்சல் முகவரி',
+  'Original email address': 'அசல் மின்னஞ்சல் முகவரி',
+  'Active Email Only': 'செயலில் உள்ள மின்னஞ்சல் மட்டுமே',
+  'Enter your genuine personal email for booking updates & invoices.': 'முன்பதிவு புதுப்பிப்புகள் மற்றும் ரசீதுகளுக்கு உங்களின் உண்மையான மின்னஞ்சலை உள்ளிடவும்.',
+  'Please enter a valid original email address (e.g. name@gmail.com)': 'தயவுசெய்து உங்களின் சரியான அசல் மின்னஞ்சலை உள்ளிடவும் (எ.கா. name@gmail.com)',
+  'Please enter your original personal email, not a dummy or test email.': 'தயவுசெய்து உங்கள் உண்மையான மின்னஞ்சல் முகவரியை உள்ளிடவும் (போலி அல்லது மாதிரி மின்னஞ்சல் அனுமதிக்கப்படாது).',
+  'Temporary or disposable email addresses are not allowed. Please enter your original email.': 'தற்காலிக அல்லது ஒருமுறை பயன்படுத்தும் மின்னஞ்சல்கள் அனுமதிக்கப்படாது. உங்கள் அசல் மின்னஞ்சலை உள்ளிடவும்.',
+  'This email is reserved for Admin. Please use your personal original email.': 'இந்த மின்னஞ்சல் நிர்வாகத்திற்கு ஒதுக்கப்பட்டுள்ளது. தயவுசெய்து உங்கள் தனிப்பட்ட அசல் மின்னஞ்சலைப் பயன்படுத்தவும்.',
+  'This email is already registered. Please login instead.': 'இந்த மின்னஞ்சல் ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது. உள்நுழையவும்.',
+
+  // Category Names & Descriptions
+  'Fan Repair': 'மின்விசிறி பழுது (Fan Repair)',
+  'Light Repair': 'மின்விளக்கு பழுது (Light Repair)',
+  'Switch Repair': 'சுவிட்ச் பழுது (Switch Repair)',
+  'Socket Repair': 'சாக்கெட் பழுது (Socket Repair)',
+  'Wiring': 'முழு வயரிங் பணி (Wiring)',
+  'MCB / DB': 'MCB / DB ஃபியூஸ் பாக்ஸ்',
+  'Motor': 'மோட்டார் பழுது (Motor)',
+  'General Electrical': 'பொது மின்சார ஆய்வு (General Electrical)',
+  'Solar / Inverter': 'சோலார் & இன்வெர்ட்டர் (Solar / Inverter)',
+  'Industrial 3-Phase': 'தொழில்துறை 3-பேஸ் (Industrial 3-Phase)',
+  'Ceiling fan, exhaust fan, regulator replacement, bearing and winding fix': 'சீலிங் ஃபேன், எக்ஸாஸ்ட் ஃபேன், ரெகுலேட்டர் மாற்றுதல், பேரிங் மற்றும் வைண்டிங் பழுது',
+  'LED lights, tube lights, chandelier, panel lights, floodlight repair': 'LED விளக்குகள், டியூப் லைட்கள், பேனல் லைட்கள், அலங்கார விளக்குகள் பழுது',
+  'Modular switch replacement, faulty switchboard, gang box inspection': 'மாடுலர் சுவிட்ச் மாற்றுதல், சுவிட்ச் போர்டு பழுது, கேங் பாக்ஸ் ஆய்வு',
+  '16A power socket, 6A standard socket, earthing check, burnt pin fix': '16A பவர் சாக்கெட், 6A சாக்கெட், எர்த்திங் சோதனை, எரிந்த பின் பழுது',
+  'Complete home wiring, conduit wiring, short circuit isolation, re-wiring': 'முழுமையான வீட்டு வயரிங், பைப் வயரிங், ஷார்ட் சர்க்யூட் சரிசெய்தல்',
+  'Distribution board overhaul, MCB tripping fix, RCCB / ELCB installation': 'மெயின் போர்டு ஆய்வு, MCB ட்ரிப்பிங் சரிசெய்தல், RCCB / ELCB பொருத்துதல்',
+  'Single/Three-phase motor starter, winding diagnosis, capacitor change': 'சிங்கிள்/3-பேஸ் மோட்டார் ஸ்டார்ட்டர், வைண்டிங் சோதனை, கெபாசிட்டர் மாற்றுதல்',
+  'Skill Level': 'திறன் நிலை',
+
+  // Audit Logs & Deletions
+  'Audit Trail': 'தணிக்கை பதிவுகள்',
+  'Search audit trail by operator, action event, job ID, or details...': 'ஆபரேட்டர், செயல், வேலை எண் மூலம் தேடுக...',
+  'Billing & Approvals': 'பில்லிங் & ஒப்புதல்கள்',
+  'Clear All Logs': 'அனைத்து பதிவுகளையும் அழிக்கவும்',
+  'Clear Audit Trail': 'தணிக்கை பதிவுகளை அழிக்கவும்',
+  'Delete Selected': 'தேர்ந்தெடுத்ததை நீக்கவும்',
+  'Delete Audit Log': 'பதிவை நீக்கவும்',
+  'Are you sure you want to clear all audit logs?': 'அனைத்து தணிக்கை பதிவுகளையும் அழிக்க உறுதியாக உள்ளீர்களா?',
+  'Are you sure you want to delete this audit record?': 'இந்த தணிக்கை பதிவை நீக்க உறுதியாக உள்ளீர்களா?',
+  'Audit record deleted successfully': 'தணிக்கை பதிவு வெற்றிகரமாக நீக்கப்பட்டது',
+  'All audit records cleared successfully': 'அனைத்து தணிக்கை பதிவுகளும் வெற்றிகரமாக அழிக்கப்பட்டன',
+  'Operator': 'செயல்படுத்தியவர்',
+  'Role': 'பொறுப்பு',
+  'Action Event': 'செயல் நிகழ்வு',
+  'Job Reference': 'வேலை எண்',
+  'Audit Trail Details': 'தணிக்கை விவரங்கள்',
+  'No matching audit records found.': 'பொருத்தமான தணிக்கை பதிவுகள் எதுவும் இல்லை.',
+
   // Site / System
   'DATABASE CONNECTED': 'தரவுத்தளம் இணைக்கப்பட்டது',
   'NODE V2.4 SECURE': 'பாதுகாப்பான இணைப்பு',
@@ -1451,66 +1594,81 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const t = (key: string, defaultText?: string): string => {
+  const t = (key?: any, defaultText?: any): string => {
+    if (key === null || key === undefined) {
+      return defaultText !== null && defaultText !== undefined ? String(defaultText) : '';
+    }
+
+    const keyStr = typeof key === 'string' ? key : String(key);
+    const defStr = defaultText !== null && defaultText !== undefined ? String(defaultText) : undefined;
+
     if (language === 'en') {
-      return translationsEn[key] || defaultText || key;
+      return translationsEn[keyStr] || defStr || keyStr;
     }
 
     // Tamil translation lookup strategy:
     // 1. Direct key match in translationsTa
-    if (translationsTa[key]) {
-      return translationsTa[key];
+    if (translationsTa[keyStr]) {
+      return translationsTa[keyStr];
     }
 
     // 2. Direct phrase match in directPhraseMap
-    if (directPhraseMap[key]) {
-      return directPhraseMap[key];
+    if (directPhraseMap[keyStr]) {
+      return directPhraseMap[keyStr];
     }
 
     // 3. Match trimmed or cleaned key
-    const trimmedKey = key.trim();
-    if (directPhraseMap[trimmedKey]) {
+    const trimmedKey = keyStr.trim();
+    if (trimmedKey && directPhraseMap[trimmedKey]) {
       return directPhraseMap[trimmedKey];
+    }
+    if (trimmedKey && translationsTa[trimmedKey]) {
+      return translationsTa[trimmedKey];
     }
 
     // 4. Check defaultText in directPhraseMap or translationsTa
-    if (defaultText) {
-      const trimmedDef = defaultText.trim();
-      if (directPhraseMap[trimmedDef]) {
+    if (defStr) {
+      const trimmedDef = defStr.trim();
+      if (trimmedDef && directPhraseMap[trimmedDef]) {
         return directPhraseMap[trimmedDef];
       }
-      if (translationsTa[trimmedDef]) {
+      if (trimmedDef && translationsTa[trimmedDef]) {
         return translationsTa[trimmedDef];
       }
-      if (directPhraseMap[defaultText]) {
-        return directPhraseMap[defaultText];
+      if (directPhraseMap[defStr]) {
+        return directPhraseMap[defStr];
       }
-      if (translationsTa[defaultText]) {
-        return translationsTa[defaultText];
+      if (translationsTa[defStr]) {
+        return translationsTa[defStr];
       }
     }
 
     // 5. Case-insensitive search in directPhraseMap
-    const lowerKey = key.toLowerCase().trim();
-    for (const [k, v] of Object.entries(directPhraseMap)) {
-      if (k.toLowerCase() === lowerKey) {
-        return v;
-      }
-    }
-
-    if (defaultText) {
-      const lowerDef = defaultText.toLowerCase().trim();
+    const lowerKey = trimmedKey ? trimmedKey.toLowerCase() : '';
+    if (lowerKey) {
       for (const [k, v] of Object.entries(directPhraseMap)) {
-        if (k.toLowerCase() === lowerDef) {
+        if (k.toLowerCase() === lowerKey) {
           return v;
         }
       }
     }
 
-    return defaultText || key;
+    if (defStr) {
+      const lowerDef = defStr.toLowerCase().trim();
+      if (lowerDef) {
+        for (const [k, v] of Object.entries(directPhraseMap)) {
+          if (k.toLowerCase() === lowerDef) {
+            return v;
+          }
+        }
+      }
+    }
+
+    return defStr || keyStr;
   };
 
   return <I18nContext.Provider value={{ language, setLanguage, t }}>{children}</I18nContext.Provider>;
 };
 
 export const useI18n = () => useContext(I18nContext);
+

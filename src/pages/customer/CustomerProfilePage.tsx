@@ -276,7 +276,7 @@ export const CustomerProfilePage: React.FC = () => {
                 }}
                 className="px-2.5 py-1 rounded-lg bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/40 text-[11px] text-cyan-300 font-bold transition cursor-pointer"
               >
-                ⚡ Mudukkumeendanpatti HQ (628716)
+                ⚡ {t('Mudukkumeendanpatti HQ (628716)', 'Mudukkumeendanpatti HQ (628716)')}
               </button>
               <button
                 type="button"
@@ -292,11 +292,11 @@ export const CustomerProfilePage: React.FC = () => {
                   setState('Tamilnadu');
                   setPincode('628501');
                   setGeoStatus('detected');
-                  setGeoMessage('Location set to Kovilpatti Main ✓');
+                  setGeoMessage(t('GPS Captured ✓', 'Location set to Kovilpatti Main ✓'));
                 }}
                 className="px-2.5 py-1 rounded-lg bg-blue-950/80 hover:bg-blue-900 border border-blue-500/40 text-[11px] text-blue-300 font-bold transition cursor-pointer"
               >
-                ⚡ Kovilpatti Town (628501)
+                ⚡ {t('Kovilpatti Town (628501)', 'Kovilpatti Town (628501)')}
               </button>
             </div>
 
